@@ -1,0 +1,189 @@
+/* test page styling */
+
+* { 
+    padding: 0; 
+    margin: 0; 
+}
+
+body { 
+    background: #222;
+    font-family: Georgia, Times, "Times New Roman", serif;
+    color: #aaa;
+}
+
+h1 {
+    color: #fff;
+    display: block;
+    margin: 0 0 1em 0;
+    font-weight: normal;
+    font-size: 30px;
+}
+
+h2 {
+    color: #ddd;
+    display: block;
+    margin: 0 0 1em 0;
+    font-weight: normal;
+    font-size: 24px;
+}
+
+p, ul li {
+    margin: 0 0 1em 0;
+    color: #bbb;
+    font-size: 12px;
+}
+
+ul {
+    list-style: square;
+}
+
+.nav {
+    margin: 0 0 2em 0;
+    font-size: 16px;
+}
+
+a, a:link, a:visited, a:active, a:hover {
+    color: #aaa;
+    text-decoration: none;
+    border-bottom: 1px solid #555;
+    padding: 0 0 2px 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 80px 20px;
+}
+
+.nav-sep {
+    padding: 0 5px;
+}
+
+.controls {
+    overflow: hidden;
+    margin: 60px 0 30px 0;
+}
+
+.controls .checkbox {
+    float: left;
+    margin: 5px 20px 5px 0;
+}
+
+/* test items */
+
+.items-container,
+.data-test-items {
+    overflow: hidden;
+    margin: 0 -1%;
+}
+
+.item {
+    display: block;
+    float: left;
+    width: 23%;
+    background: #444;
+    color: #fff;
+}
+
+.item img {
+    display: block;
+    max-width: 100%;
+}
+
+.item p:last-child {
+    margin-bottom: 0;
+}
+
+.items-container.big-items .item {
+    width: 48%;
+}
+
+/* test margins */
+
+.test-margin .item {
+    margin: 1%;
+}
+
+/* test a mix of padding amounts */
+
+.test-padding .item {
+    padding: 20px;
+}
+
+.test-padding .item-5 {
+    padding: 30px;
+}
+
+.test-padding .item-6 {
+    padding: 40px;
+}
+
+.test-padding .item-7 {
+    padding: 50px;
+}
+
+/* test a mix of border widths */
+
+.test-border .item {
+    border: 1px solid #ccc;
+}
+
+.test-border .item-2 {
+    border: 3px solid #ccc;
+}
+
+.test-border .item-3 {
+    border: 6px solid #ccc;
+}
+
+.test-border .item-5 {
+    border: 8px solid #ccc;
+}
+
+.test-border .item-8 {
+    border: 10px solid #ccc;
+}
+
+/* test border-box */
+
+.test-border-box .item {
+    -moz-box-sizing: border-box; 
+    -webkit-box-sizing: border-box; 
+    box-sizing: border-box;
+}
+
+/* test fixed height items */
+
+.items-container.fixed-items .item-0 {
+    height: 150px;
+}
+
+.items-container.fixed-items .item-1 {
+    height: 190px;
+}
+
+.items-container.fixed-items .item-2 {
+    height: 230px;
+}
+
+.items-container.fixed-items .item-3 {
+    height: 250px;
+}
+
+/* test responsive */
+
+@media only screen and (max-width: 1024px) {
+    .item,
+    .items-container.big-items .item {
+        width: 48%;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .test-margin .item,
+    .test-margin .items-container.big-items .item {
+        width: 99%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
