@@ -1,4 +1,4 @@
-# jquery.matchHeight.js #
+# jquery.matchHeight.js # 
 
 *matchHeight* makes the height of all selected elements exactly equal.
 
