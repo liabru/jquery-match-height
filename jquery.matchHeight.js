@@ -135,7 +135,8 @@
     $($.fn.matchHeight._applyDataApi);
 
     // update heights on load and resize events
-    $(window).on('load resize orientationchange', $.fn.matchHeight._update);
+    
+    $(window).bind('load resize orientationchange', $.fn.matchHeight._update);
 
     /*
     *  rows utility function
