@@ -1,5 +1,5 @@
 /**
-* jquery.matchHeight.js v0.5.0
+* jquery.matchHeight.js v0.5.1
 * http://brm.io/jquery-match-height/
 * License: MIT
 */
@@ -148,7 +148,6 @@
     $($.fn.matchHeight._applyDataApi);
 
     // update heights on load and resize events
-    
     $(window).bind('load resize orientationchange', $.fn.matchHeight._update);
 
     /*
