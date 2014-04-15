@@ -121,7 +121,20 @@
    
     $.fn.matchHeight._groups = [];
 
-    $.fn.matchHeight._update = function() {
+    var previousResizeWidth = -1;
+
+    $.fn.matchHeight._update = function(event) {
+
+        // prevent update if fired from a resize event 
+        // where the viewport width hasn't actually changed
+        // fixes an event looping bug in IE8
+        if (event && event.type === 'resize') {
+            var windowWidth = $(window).width();
+            if (windowWidth === previousResizeWidth)
+                return;
+            previousResizeWidth = windowWidth;
+        }
+
         $.each($.fn.matchHeight._groups, function() {
             $.fn.matchHeight._apply(this.elements, this.byRow);
         });
