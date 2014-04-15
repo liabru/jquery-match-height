@@ -79,8 +79,8 @@
 
                 // handle padding and border correctly (required when not using border-box)
                 if ($that.css('box-sizing') !== 'border-box') {
-                    verticalPadding += parseInt($that.css('border-top-width'), 10) + parseInt($that.css('border-bottom-width'), 10);
-                    verticalPadding += parseInt($that.css('padding-top'), 10) + parseInt($that.css('padding-bottom'), 10);
+                    verticalPadding += _parse($that.css('border-top-width')) + _parse($that.css('border-bottom-width'));
+                    verticalPadding += _parse($that.css('padding-top')) + _parse($that.css('padding-bottom'));
                 }
 
                 // set the height (accounting for padding and border)
@@ -153,7 +153,7 @@
         // group elements by their top position
         $elements.each(function(){
             var $that = $(this),
-                top = $that.offset().top - parseInt($that.css('margin-top'), 10),
+                top = $that.offset().top - _parse($that.css('margin-top')),
                 lastRow = rows.length > 0 ? rows[rows.length - 1] : null;
 
             if (lastRow === null) {
@@ -174,6 +174,11 @@
         });
 
         return rows;
+    };
+
+    var _parse = function(value) {
+        // parse value and convert NaN to 0
+        return parseFloat(value) || 0;
     };
 
 })(jQuery);
