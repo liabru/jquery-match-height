@@ -4,8 +4,7 @@
 
 [brm.io/jquery-match-height](http://brm.io/jquery-match-height/)
 
-I needed a more robust version of the common [equal heights](https://www.google.com/search?q=jquery+equal+heights) plugin (that everyone and their grandma has made before).
-
+I needed a more robust version of the common [equal heights](https://www.google.com/search?q=jquery+equal+heights) plugin.
 So matchHeight improves on these by adding features and handling the edge cases where the others tend to fail in practice.
 
 ### Demo
@@ -26,7 +25,7 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 
 ### Status
 
-Current version is `v0.5.0`. I've fully tested it and it works well, but if you use it make sure you test fully too. 
+Current version is `v0.5.1`. I've fully tested it and it works well, but if you use it make sure you test fully too. 
 Please report any [issues](https://github.com/liabru/jquery-match-height/issues) you find.
 
 ### Install
@@ -35,6 +34,10 @@ Please report any [issues](https://github.com/liabru/jquery-match-height/issues)
 <br>Download [jquery.matchHeight.js](https://github.com/liabru/jquery-match-height/blob/master/jquery.matchHeight.js) and include the script in your HTML file:
 
 	<script src="jquery.matchHeight.js" type="text/javascript"></script>
+
+#### Or install using [Bower](http://bower.io/)
+
+	bower install matchHeight
 
 ### Usage
 
@@ -70,6 +73,10 @@ If the items are on multiple rows, the items of each row will be set to the tall
 Will set both elements in `my-group` to the same height, then both elements in `my-other-group` to be the same height respectively.
 
 See the included [test.html](https://github.com/liabru/jquery-match-height/blob/master/test.html) for a working example.
+
+### Changelog
+
+To see what's new or changed in the latest version, see the [changelog](https://github.com/liabru/jquery-match-height/blob/master/CHANGELOG.md)
 
 ### Advanced Usage
 
