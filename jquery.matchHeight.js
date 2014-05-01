@@ -7,6 +7,24 @@
 (function($) {
 
     $.fn.matchHeight = function(byRow) {
+
+        // handle matchHeight('remove')
+        if (byRow === 'remove') {
+            var that = this;
+
+            // remove fixed height from all selected elements
+            this.css('height', '');
+
+            // remove selected elements from all groups
+            $.each($.fn.matchHeight._groups, function(key, group) {
+                group.elements = group.elements.not(that);
+            });
+
+            // TODO: cleanup empty groups
+
+            return this;
+        }
+
         if (this.length <= 1)
             return this;
 

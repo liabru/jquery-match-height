@@ -28,6 +28,13 @@
                     $('.items-container').each(function() {
                         $(this).children('.item').matchHeight(byRow);
                     });
+
+                    // example of removing matchHeight
+                    $('.test-remove').click(function() {
+                        $('.items-container').each(function() {
+                            $(this).children('.item').matchHeight('remove');
+                        });
+                    });
                 });
 
             })();
@@ -75,6 +82,11 @@
                     <label>
                         <input class="option" type="checkbox" value="test-rows" checked>
                         by row
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input class="test-remove" type="submit" value="remove all">
                     </label>
                 </div>
             </div>

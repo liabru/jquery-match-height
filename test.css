@@ -69,6 +69,11 @@ a, a:link, a:visited, a:active, a:hover {
     margin: 5px 20px 5px 0;
 }
 
+.test-remove {
+    padding: 5px;
+    margin: -5px 20px;
+}
+
 /* test items */
 
 .items-container,
