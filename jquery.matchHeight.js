@@ -70,6 +70,9 @@
                 // find the max height (including padding, but not margin)
                 if ($that.outerHeight(false) > maxHeight)
                     maxHeight = $that.outerHeight(false);
+
+                // revert display block
+                $that.css({ 'display': '' });
             });
 
             // iterate the row and apply the height to all elements
