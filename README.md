@@ -22,6 +22,7 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 - handles images and other media (updates automatically after loading)
 - data attributes API
 - tested in IE8+, Chrome, Firefox, Chrome Android
+- can be removed when needed
 
 ### Status
 
@@ -55,6 +56,12 @@ Use the data attribute `data-match-height="group-name"` (or `data-mh` shorthand)
 All elements with the same group name will be set to the same height when the page is loaded, regardless of their position in the DOM, without any extra code required. 
 
 Note that `byRow` will be enabled when using the data API, if you don't want this then use the above method.
+
+### Removing
+
+It is possible to remove any matchHeight bindings for a given set of elements like so
+
+	$('.item').matchHeight('remove');
 
 ### Examples
 
