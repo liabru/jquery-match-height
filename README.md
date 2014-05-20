@@ -16,7 +16,7 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 ### Features
 
 - row aware, handles floating elements
-- responsive, automatically updates on window resize
+- responsive, automatically updates on window resize (can be throttled for performance)
 - handles mixed `padding`, `margin`, `border` values (even if every element has them different)
 - accounts for `box-sizing`
 - handles images and other media (updates automatically after loading)
@@ -102,6 +102,12 @@ If you need to manually trigger an update of all currently set equal heights gro
 	$.fn.matchHeight._apply(elements, byRow)
 
 Use the apply function directly if you wish to avoid the automatic update functionality.
+
+	$.fn.matchHeight._throttle = 80;
+
+By default, the `_update` method is throttled to execute at a maximum rate of once every `80ms`.
+Decreasing the above `_throttle` property will update your layout quicker, appearing smoother during resize, at the expense of performance.
+If you experience lagging or freezing during resize, you should increase the `_throttle` property.
 
 ### Why not use CSS?
 

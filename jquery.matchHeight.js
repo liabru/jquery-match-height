@@ -141,11 +141,12 @@
     */
    
     $.fn.matchHeight._groups = [];
+    $.fn.matchHeight._throttle = 80;
 
-    var previousResizeWidth = -1;
+    var previousResizeWidth = -1,
+        updateTimeout = -1;
 
     $.fn.matchHeight._update = function(event) {
-
         // prevent update if fired from a resize event 
         // where the viewport width hasn't actually changed
         // fixes an event looping bug in IE8
@@ -156,9 +157,18 @@
             previousResizeWidth = windowWidth;
         }
 
-        $.each($.fn.matchHeight._groups, function() {
-            $.fn.matchHeight._apply(this.elements, this.byRow);
-        });
+        // throttle updates
+        if (updateTimeout === -1) {
+            updateTimeout = setTimeout(function() {
+
+                $.each($.fn.matchHeight._groups, function() {
+                    $.fn.matchHeight._apply(this.elements, this.byRow);
+                });
+
+                updateTimeout = -1;
+
+            }, $.fn.matchHeight._throttle);
+        }
     };
 
     /* 
