@@ -1,5 +1,5 @@
 /**
-* jquery.matchHeight-min.js v0.5.1
+* jquery.matchHeight-min.js v0.5.2
 * http://brm.io/jquery-match-height/
 * License: MIT
 */

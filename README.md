@@ -26,7 +26,7 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 
 ### Status
 
-Current version is `v0.5.1`. I've fully tested it and it works well, but if you use it make sure you test fully too. 
+Current version is `v0.5.2`. I've fully tested it and it works well, but if you use it make sure you test fully too. 
 Please report any [issues](https://github.com/liabru/jquery-match-height/issues) you find.
 
 ### Install
