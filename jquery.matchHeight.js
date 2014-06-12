@@ -55,8 +55,8 @@
                 'display': 'block',
                 'padding-top': '0',
                 'padding-bottom': '0',
-                'border-top': '0',
-                'border-bottom': '0',
+                'border-top-width': '0',
+                'border-bottom-width': '0',
                 'height': '100px'
             });
 
@@ -68,8 +68,8 @@
                 'display': '',
                 'padding-top': '',
                 'padding-bottom': '',
-                'border-top': '',
-                'border-bottom': '',
+                'border-top-width': '',
+                'border-bottom-width': '',
                 'height': ''
             });
         }
