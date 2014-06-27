@@ -78,6 +78,10 @@
             var $row = $(row),
                 maxHeight = 0;
 
+            // ensure elements are visible to prevent 0 height
+            var hiddenParents = $row.parents().add($row).filter(':hidden');
+            hiddenParents.css({ 'display': 'block' });
+
             // iterate the row and find the max height
             $row.each(function(){
                 var $that = $(this);
@@ -92,6 +96,9 @@
                 // revert display block
                 $that.css({ 'display': '' });
             });
+
+            // revert display block
+            hiddenParents.css({ 'display': '' });
 
             // iterate the row and apply the height to all elements
             $row.each(function(){

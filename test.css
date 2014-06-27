@@ -72,7 +72,8 @@ a, a:link, a:visited, a:active, a:hover {
     margin: 5px 20px 5px 0;
 }
 
-.test-remove {
+.btn-remove,
+.btn-hidden {
     margin: -8px 20px 0 20px;
     line-height: 1;
     border: 0;
@@ -236,4 +237,16 @@ a, a:link, a:visited, a:active, a:hover {
         margin-left: 0;
         margin-right: 0;
     }
+}
+
+/* test hidden */
+
+.test-hidden .hidden-items > .item-0,
+.test-hidden .hidden-items > .item-2 {
+    display: none;
+}
+
+.test-hidden .hidden-items > .item-1,
+.test-hidden .hidden-items > .item-3 {
+    visibility: hidden;
 }

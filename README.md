@@ -18,8 +18,9 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 - row aware, handles floating elements
 - responsive, automatically updates on window resize (can be throttled for performance)
 - handles mixed `padding`, `margin`, `border` values (even if every element has them different)
-- accounts for `box-sizing`
 - handles images and other media (updates automatically after loading)
+- handles hidden or none-visible elements (e.g. those inside tab controls)
+- accounts for `box-sizing`
 - data attributes API
 - tested in IE8+, Chrome, Firefox, Chrome Android
 - can be removed when needed

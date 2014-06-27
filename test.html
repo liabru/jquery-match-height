@@ -30,17 +30,22 @@
                     });
 
                     // example of removing matchHeight
-                    $('.test-remove').click(function() {
+                    $('.btn-remove').click(function() {
                         $('.items-container').each(function() {
                             $(this).children('.item').matchHeight('remove');
                         });
+                    });
+
+                    // button to show hidden elements
+                    $('.btn-hidden').click(function() {
+                        $('body').removeClass('test-hidden');
                     });
                 });
 
             })();
         </script>
     </head>
-    <body class="test-match-height test-rows test-responsive test-border-box test-margin test-padding">
+    <body class="test-match-height test-rows test-responsive test-border-box test-margin test-padding test-hidden">
         <div class="container">
             <h1>jquery.matchHeight Tests</h1>
 
@@ -86,7 +91,12 @@
                 </div>
                 <div class="checkbox">
                     <label>
-                        <input class="test-remove" type="submit" value="remove matchHeight">
+                        <input class="btn-remove" type="submit" value="remove matchHeight">
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input class="btn-hidden" type="submit" value="show hidden">
                     </label>
                 </div>
             </div>
@@ -204,6 +214,35 @@
                 </div>
                 <div class="item item-3">
                     <p>Fixed height</p>
+                </div>
+            </div>
+
+            <div class="items-container hidden-items">
+                <div class="item item-0">
+                    <p>display: none</p>
+                </div>
+                <div class="item item-1">
+                    <p>visibility: hidden</p>
+                </div>
+                <div class="item item-2">
+                    <div class="items-container">
+                        <div class="item item-0">
+                            <p>parent display: none</p>
+                        </div>
+                        <div class="item item-0">
+                            <p>parent display: none</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item item-3">
+                    <div class="items-container">
+                        <div class="item item-1">
+                            <p>parent visibility: hidden</p>
+                        </div>
+                        <div class="item item-1">
+                            <p>parent visibility: hidden</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
