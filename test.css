@@ -250,3 +250,25 @@ a, a:link, a:visited, a:active, a:hover {
 .test-hidden .hidden-items > .item-3 {
     visibility: hidden;
 }
+
+/* test display */
+
+.display-items .item-0 {
+    display: block;
+    height: 50px;
+}
+
+.display-items .item-1 {
+    display: inline;
+    height: 100px;
+}
+
+.display-items .item-2 {
+    display: inline-block;
+    height: 150px;
+}
+
+.display-items .item-3 {
+    display: table-cell;
+    height: 200px;
+}
