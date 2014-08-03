@@ -51,13 +51,18 @@
         if (byRow) {
 
             // must first force an arbitrary equal height so floating elements break evenly
-            $elements.css({
-                'display': 'block',
-                'padding-top': '0',
-                'padding-bottom': '0',
-                'border-top-width': '0',
-                'border-bottom-width': '0',
-                'height': '100px'
+            $elements.each(function() {
+                var $that = $(this),
+                    display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
+
+                $that.css({
+                    'display': display,
+                    'padding-top': '0',
+                    'padding-bottom': '0',
+                    'border-top-width': '0',
+                    'border-bottom-width': '0',
+                    'height': '100px'
+                });
             });
 
             // get the array of rows (based on element top position)
@@ -84,10 +89,11 @@
 
             // iterate the row and find the max height
             $row.each(function(){
-                var $that = $(this);
+                var $that = $(this),
+                    display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
 
                 // ensure we get the correct actual height (and not a previously set height value)
-                $that.css({ 'display': 'block', 'height': '' });
+                $that.css({ 'display': display, 'height': '' });
 
                 // find the max height (including padding, but not margin)
                 if ($that.outerHeight(false) > maxHeight)

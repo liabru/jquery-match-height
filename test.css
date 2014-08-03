@@ -251,24 +251,15 @@ a, a:link, a:visited, a:active, a:hover {
     visibility: hidden;
 }
 
-/* test display */
+/* test inline-block */
 
-.display-items .item-0 {
-    display: block;
-    height: 50px;
+.inline-block-items {
+    text-align: center;
 }
 
-.display-items .item-1 {
-    display: inline;
-    height: 100px;
-}
-
-.display-items .item-2 {
+.inline-block-items .item {
     display: inline-block;
-    height: 150px;
-}
-
-.display-items .item-3 {
-    display: table-cell;
-    height: 200px;
+    vertical-align: top;
+    /*width: 20%;*/
+    float: none;
 }
