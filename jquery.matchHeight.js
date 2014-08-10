@@ -135,7 +135,7 @@
         // generate groups by their groupId set by elements using data-match-height
         $('[data-match-height], [data-mh]').each(function() {
             var $this = $(this),
-                groupId = $this.attr('data-match-height');
+                groupId = $this.attr('data-match-height') || $this.attr('data-mh');
             if (groupId in groups) {
                 groups[groupId] = groups[groupId].add($this);
             } else {
