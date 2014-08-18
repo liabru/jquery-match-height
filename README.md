@@ -1,11 +1,9 @@
 # jquery.matchHeight.js #
 
-*matchHeight* makes the height of all selected elements exactly equal.
+*matchHeight* makes the height of all selected elements exactly equal.<br>
+It handles many edge cases that cause similar plugins to fail.
 
 [brm.io/jquery-match-height](http://brm.io/jquery-match-height/)
-
-I needed a more robust version of the common [equal heights](https://www.google.com/search?q=jquery+equal+heights) plugin.
-So matchHeight improves on these by adding features and handling the edge cases where the others tend to fail in practice.
 
 ### Demo
 
@@ -24,6 +22,7 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 - data attributes API
 - tested in IE8+, Chrome, Firefox, Chrome Android
 - can be removed when needed
+- maintain scroll position correctly
 
 ### Status
 
@@ -50,20 +49,6 @@ You should apply this on the [DOM ready](http://api.jquery.com/ready/) event.
 
 See the included [test.html](https://github.com/liabru/jquery-match-height/blob/master/test.html) for a working example.
 
-### Data API
-
-Use the data attribute `data-match-height="group-name"` (or `data-mh` shorthand) where `group-name` is an arbitrary string to denote which elements should be considered as a group.
-
-All elements with the same group name will be set to the same height when the page is loaded, regardless of their position in the DOM, without any extra code required. 
-
-Note that `byRow` will be enabled when using the data API, if you don't want this then use the above method.
-
-### Removing
-
-It is possible to remove any matchHeight bindings for a given set of elements like so
-
-	$('.item').matchHeight('remove');
-
 ### Examples
 
 	$(function() {
@@ -82,27 +67,37 @@ Will set both elements in `my-group` to the same height, then both elements in `
 
 See the included [test.html](https://github.com/liabru/jquery-match-height/blob/master/test.html) for a working example.
 
-### Changelog
-
-To see what's new or changed in the latest version, see the [changelog](https://github.com/liabru/jquery-match-height/blob/master/CHANGELOG.md)
-
 ### Advanced Usage
 
 There are a few internal properties and functions you should know about:
 
-	$.fn.matchHeight._groups
+#### Data API
 
-The array that contains all element groups that have had `matchHeight` applied. Used for automatically updating on resize events.<br>
-Search and modify this array if you need to remove any groups or elements, for example if you're deleting elements.
+Use the data attribute `data-match-height="group-name"` (or `data-mh` shorthand) where `group-name` is an arbitrary string to denote which elements should be considered as a group.
+
+All elements with the same group name will be set to the same height when the page is loaded, regardless of their position in the DOM, without any extra code required. 
+
+Note that `byRow` will be enabled when using the data API, if you don't want this then use the alternative method above.
+
+#### Removing
+
+It is possible to remove any matchHeight bindings for a given set of elements like so
+
+	$('.item').matchHeight('remove');
+
+#### Manually trigger an update
 
 	$.fn.matchHeight._update()
 
 If you need to manually trigger an update of all currently set equal heights groups, for example if you've modified some content.
 
+#### Manually apply match height
 
 	$.fn.matchHeight._apply(elements, byRow)
 
 Use the apply function directly if you wish to avoid the automatic update functionality.
+
+#### Throttling resize updates
 
 	$.fn.matchHeight._throttle = 80;
 
@@ -110,11 +105,23 @@ By default, the `_update` method is throttled to execute at a maximum rate of on
 Decreasing the above `_throttle` property will update your layout quicker, appearing smoother during resize, at the expense of performance.
 If you experience lagging or freezing during resize, you should increase the `_throttle` property.
 
-### Why not use CSS?
+#### Maintain scroll position
 
-Making robust, responsive equal height columns for _arbitrary content_ is [difficult or impossible](http://filamentgroup.com/lab/setting_equal_heights_with_jquery/) to do with CSS alone (at least without hacks or trickery, in a backwards compatible way).
+	$.fn.matchHeight._maintainScroll = true;
 
-Note you should probably ensure your layout is still usable if JavaScript is disabled.
+Under certain conditions where the size of the page is dynamically changing, such as during resize or when adding new elements, browser bugs cause the page scroll position to change unexpectedly.
+
+If you are observing this behaviour, use the above line to automatically attempt to force scroll position to be maintained (approximately). This is a global setting and by default it is `false`.
+
+#### Accessing groups directly
+
+	$.fn.matchHeight._groups
+
+The array that contains all element groups that have had `matchHeight` applied. Used for automatically updating on resize events. Search and modify this array if you need to remove any groups or elements, for example if you're deleting elements.
+
+### Changelog
+
+To see what's new or changed in the latest version, see the [changelog](https://github.com/liabru/jquery-match-height/blob/master/CHANGELOG.md)
 
 ### License
 
@@ -123,3 +130,9 @@ jquery.matchHeight.js is licensed under [The MIT License (MIT)](http://opensourc
 
 This license is also supplied with the release and source code.
 <br/>As stated in the license, absolutely no warranty is provided.
+
+##### Why not use CSS?
+
+Making robust, responsive equal height columns for _arbitrary content_ is [difficult or impossible](http://filamentgroup.com/lab/setting_equal_heights_with_jquery/) to do with CSS alone (at least without hacks or trickery, in a backwards compatible way).
+
+Note you should probably ensure your layout is still usable if JavaScript is disabled.
