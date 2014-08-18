@@ -47,6 +47,10 @@
         var $elements = $(elements),
             rows = [$elements];
 
+        // take note of scroll position
+        var scrollTop = $(window).scrollTop(),
+            htmlHeight = $('html').outerHeight(true);
+
         // get rows if using byRow, otherwise assume one row
         if (byRow) {
 
@@ -122,6 +126,10 @@
             });
         });
 
+        // restore scroll position if enabled
+        if ($.fn.matchHeight._maintainScroll)
+            $(window).scrollTop((scrollTop / htmlHeight) * $('html').outerHeight(true));
+
         return this;
     };
 
@@ -155,6 +163,7 @@
    
     $.fn.matchHeight._groups = [];
     $.fn.matchHeight._throttle = 80;
+    $.fn.matchHeight._maintainScroll = false;
 
     var previousResizeWidth = -1,
         updateTimeout = -1;
