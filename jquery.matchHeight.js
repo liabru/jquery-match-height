@@ -4,7 +4,7 @@
 * License: MIT
 */
 
-(function($) {
+;(function($) {
 
     $.fn.matchHeight = function(byRow) {
 
