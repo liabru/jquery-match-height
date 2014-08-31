@@ -5,6 +5,65 @@
 */
 
 ;(function($) {
+    /*
+    *  internal
+    */
+
+    var _previousResizeWidth = -1,
+        _updateTimeout = -1;
+
+    /*
+    *  _rows 
+    *  utility function returns array of jQuery selections representing each row 
+    *  (as displayed after float wrapping applied by browser)
+    */
+
+    var _rows = function(elements) {
+        var tolerance = 1,
+            $elements = $(elements),
+            lastTop = null,
+            rows = [];
+
+        // group elements by their top position
+        $elements.each(function(){
+            var $that = $(this),
+                top = $that.offset().top - _parse($that.css('margin-top')),
+                lastRow = rows.length > 0 ? rows[rows.length - 1] : null;
+
+            if (lastRow === null) {
+                // first item on the row, so just push it
+                rows.push($that);
+            } else {
+                // if the row top is the same, add to the row group
+                if (Math.floor(Math.abs(lastTop - top)) <= tolerance) {
+                    rows[rows.length - 1] = lastRow.add($that);
+                } else {
+                    // otherwise start a new row group
+                    rows.push($that);
+                }
+            }
+
+            // keep track of the last row top
+            lastTop = top;
+        });
+
+        return rows;
+    };
+
+    /*
+    *  _parse
+    *  value parse utility function
+    */
+
+    var _parse = function(value) {
+        // parse value and convert NaN to 0
+        return parseFloat(value) || 0;
+    };
+
+    /*
+    *  $.fn.matchHeight
+    *  plugin definition
+    */
 
     $.fn.matchHeight = function(byRow) {
 
@@ -42,6 +101,19 @@
 
         return this;
     };
+
+    /*
+    *  plugin global options
+    */
+
+    $.fn.matchHeight._groups = [];
+    $.fn.matchHeight._throttle = 80;
+    $.fn.matchHeight._maintainScroll = false;
+
+    /*
+    *  $.fn.matchHeight._apply
+    *  apply matchHeight to given elements
+    */
 
     $.fn.matchHeight._apply = function(elements, byRow) {
         var $elements = $(elements),
@@ -134,7 +206,8 @@
     };
 
     /*
-    *  _applyDataApi will apply matchHeight to all elements with a data-match-height attribute
+    *  $.fn.matchHeight._applyDataApi
+    *  applies matchHeight to all elements with a data-match-height attribute
     */
    
     $.fn.matchHeight._applyDataApi = function() {
@@ -158,15 +231,9 @@
     };
 
     /* 
-    *  _update function will re-apply matchHeight to all groups with the correct options
+    *  $.fn.matchHeight._update
+    *  updates matchHeight on all current groups with their correct options
     */
-   
-    $.fn.matchHeight._groups = [];
-    $.fn.matchHeight._throttle = 80;
-    $.fn.matchHeight._maintainScroll = false;
-
-    var previousResizeWidth = -1,
-        updateTimeout = -1;
 
     $.fn.matchHeight._update = function(event) {
         // prevent update if fired from a resize event 
@@ -174,20 +241,20 @@
         // fixes an event looping bug in IE8
         if (event && event.type === 'resize') {
             var windowWidth = $(window).width();
-            if (windowWidth === previousResizeWidth)
+            if (windowWidth === _previousResizeWidth)
                 return;
-            previousResizeWidth = windowWidth;
+            _previousResizeWidth = windowWidth;
         }
 
         // throttle updates
-        if (updateTimeout === -1) {
-            updateTimeout = setTimeout(function() {
+        if (_updateTimeout === -1) {
+            _updateTimeout = setTimeout(function() {
 
                 $.each($.fn.matchHeight._groups, function() {
                     $.fn.matchHeight._apply(this.elements, this.byRow);
                 });
 
-                updateTimeout = -1;
+                _updateTimeout = -1;
 
             }, $.fn.matchHeight._throttle);
         }
@@ -202,48 +269,5 @@
 
     // update heights on load and resize events
     $(window).bind('load resize orientationchange', $.fn.matchHeight._update);
-
-    /*
-    *  rows utility function
-    *  returns array of jQuery selections representing each row 
-    *  (as displayed after float wrapping applied by browser)
-    */
-
-    var _rows = function(elements) {
-        var tolerance = 1,
-            $elements = $(elements),
-            lastTop = null,
-            rows = [];
-
-        // group elements by their top position
-        $elements.each(function(){
-            var $that = $(this),
-                top = $that.offset().top - _parse($that.css('margin-top')),
-                lastRow = rows.length > 0 ? rows[rows.length - 1] : null;
-
-            if (lastRow === null) {
-                // first item on the row, so just push it
-                rows.push($that);
-            } else {
-                // if the row top is the same, add to the row group
-                if (Math.floor(Math.abs(lastTop - top)) <= tolerance) {
-                    rows[rows.length - 1] = lastRow.add($that);
-                } else {
-                    // otherwise start a new row group
-                    rows.push($that);
-                }
-            }
-
-            // keep track of the last row top
-            lastTop = top;
-        });
-
-        return rows;
-    };
-
-    var _parse = function(value) {
-        // parse value and convert NaN to 0
-        return parseFloat(value) || 0;
-    };
 
 })(jQuery);
