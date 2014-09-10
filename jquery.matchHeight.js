@@ -239,7 +239,13 @@
     *  updates matchHeight on all current groups with their correct options
     */
 
-    $.fn.matchHeight._update = function(event) {
+    var _update = function() {
+        $.each($.fn.matchHeight._groups, function() {
+            $.fn.matchHeight._apply(this.elements, this.byRow);
+        });
+    };
+
+    $.fn.matchHeight._update = function(throttle, event) {
         // prevent update if fired from a resize event 
         // where the viewport width hasn't actually changed
         // fixes an event looping bug in IE8
@@ -251,15 +257,12 @@
         }
 
         // throttle updates
-        if (_updateTimeout === -1) {
+        if (!throttle) {
+            _update();
+        } else if (_updateTimeout === -1) {
             _updateTimeout = setTimeout(function() {
-
-                $.each($.fn.matchHeight._groups, function() {
-                    $.fn.matchHeight._apply(this.elements, this.byRow);
-                });
-
+                _update();
                 _updateTimeout = -1;
-
             }, $.fn.matchHeight._throttle);
         }
     };
@@ -272,6 +275,13 @@
     $($.fn.matchHeight._applyDataApi);
 
     // update heights on load and resize events
-    $(window).bind('load resize orientationchange', $.fn.matchHeight._update);
+    $(window).bind('load', function(event) { 
+        $.fn.matchHeight._update();
+    });
+
+    // throttled update heights on resize events
+    $(window).bind('resize orientationchange', function(event) { 
+        $.fn.matchHeight._update(true, event);
+    });
 
 })(jQuery);
