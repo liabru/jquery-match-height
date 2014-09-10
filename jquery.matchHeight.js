@@ -159,6 +159,10 @@
             var $row = $(row),
                 maxHeight = 0;
 
+            // skip apply to rows with only one item
+            if (byRow && $row.length <= 1)
+                return;
+
             // ensure elements are visible to prevent 0 height
             var hiddenParents = $row.parents().add($row).filter(':hidden');
             hiddenParents.css({ 'display': 'block' });
