@@ -13,8 +13,8 @@
         _updateTimeout = -1;
 
     /*
-    *  _rows 
-    *  utility function returns array of jQuery selections representing each row 
+    *  _rows
+    *  utility function returns array of jQuery selections representing each row
     *  (as displayed after float wrapping applied by browser)
     */
 
@@ -131,6 +131,9 @@
                 var $that = $(this),
                     display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
 
+                // cache the original inline style
+                $that.data('style-cache', $that.attr('style'));
+
                 $that.css({
                     'display': display,
                     'padding-top': '0',
@@ -144,14 +147,12 @@
             // get the array of rows (based on element top position)
             rows = _rows($elements);
 
-            // revert the temporary forced style
-            $elements.css({
-                'display': '',
-                'padding-top': '',
-                'padding-bottom': '',
-                'border-top-width': '',
-                'border-bottom-width': '',
-                'height': ''
+            // revert original inline styles
+            $elements.each(function() {
+                var $that = $(this);
+
+                $that.attr('style', $that.data('style-cache') || '')
+                     .css('height', '');
             });
         }
 
@@ -213,7 +214,7 @@
     *  $.fn.matchHeight._applyDataApi
     *  applies matchHeight to all elements with a data-match-height attribute
     */
-   
+
     $.fn.matchHeight._applyDataApi = function() {
         var groups = {};
 
@@ -234,7 +235,7 @@
         });
     };
 
-    /* 
+    /*
     *  $.fn.matchHeight._update
     *  updates matchHeight on all current groups with their correct options
     */
@@ -246,7 +247,7 @@
     };
 
     $.fn.matchHeight._update = function(throttle, event) {
-        // prevent update if fired from a resize event 
+        // prevent update if fired from a resize event
         // where the viewport width hasn't actually changed
         // fixes an event looping bug in IE8
         if (event && event.type === 'resize') {
@@ -267,7 +268,7 @@
         }
     };
 
-    /* 
+    /*
     *  bind events
     */
 
@@ -275,12 +276,12 @@
     $($.fn.matchHeight._applyDataApi);
 
     // update heights on load and resize events
-    $(window).bind('load', function(event) { 
+    $(window).bind('load', function(event) {
         $.fn.matchHeight._update();
     });
 
     // throttled update heights on resize events
-    $(window).bind('resize orientationchange', function(event) { 
+    $(window).bind('resize orientationchange', function(event) {
         $.fn.matchHeight._update(true, event);
     });
 
