@@ -123,6 +123,10 @@
         var scrollTop = $(window).scrollTop(),
             htmlHeight = $('html').outerHeight(true);
 
+        // temporarily must force hidden parents visible
+        var $hiddenParents = $elements.parents().filter(':hidden');
+        $hiddenParents.css('display', 'block');
+
         // get rows if using byRow, otherwise assume one row
         if (byRow) {
 
@@ -164,10 +168,6 @@
             if (byRow && $row.length <= 1)
                 return;
 
-            // ensure elements are visible to prevent 0 height
-            var hiddenParents = $row.parents().add($row).filter(':hidden');
-            hiddenParents.css({ 'display': 'block' });
-
             // iterate the row and find the max height
             $row.each(function(){
                 var $that = $(this),
@@ -181,11 +181,8 @@
                     maxHeight = $that.outerHeight(false);
 
                 // revert display block
-                $that.css({ 'display': '' });
+                $that.css('display', '');
             });
-
-            // revert display block
-            hiddenParents.css({ 'display': '' });
 
             // iterate the row and apply the height to all elements
             $row.each(function(){
@@ -202,6 +199,9 @@
                 $that.css('height', maxHeight - verticalPadding);
             });
         });
+
+        // revert hidden parents
+        $hiddenParents.css('display', '');
 
         // restore scroll position if enabled
         if ($.fn.matchHeight._maintainScroll)
