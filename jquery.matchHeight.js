@@ -131,7 +131,10 @@
                 var $that = $(this),
                     display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
 
-                $that.data('original_style', $that.attr('style')).css({
+                // cache the original inline style
+                $that.data('style-cache', $that.attr('style'));
+
+                $that.css({
                     'display': display,
                     'padding-top': '0',
                     'padding-bottom': '0',
@@ -144,10 +147,12 @@
             // get the array of rows (based on element top position)
             rows = _rows($elements);
 
+            // revert original inline styles
             $elements.each(function() {
                 var $that = $(this);
 
-                $that.attr('style', $that.data('original_style'));
+                $that.attr('style', $that.data('style-cache') || '')
+                     .css('height', '');
             });
         }
 
