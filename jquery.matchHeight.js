@@ -142,6 +142,8 @@
                     'display': display,
                     'padding-top': '0',
                     'padding-bottom': '0',
+                    'margin-top': '0',
+                    'margin-bottom': '0',
                     'border-top-width': '0',
                     'border-bottom-width': '0',
                     'height': '100px'
