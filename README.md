@@ -13,6 +13,7 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 
 ### Features
 
+- match the heights of elements anywhere on the page
 - row aware, handles floating elements
 - responsive, automatically updates on window resize (can be throttled for performance)
 - handles mixed `padding`, `margin`, `border` values (even if every element has them different)
@@ -20,9 +21,9 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 - handles hidden or none-visible elements (e.g. those inside tab controls)
 - accounts for `box-sizing`
 - data attributes API
-- tested in IE8+, Chrome, Firefox, Chrome Android
 - can be removed when needed
 - maintain scroll position correctly
+- tested in IE8+, Chrome, Firefox, Chrome Android
 
 ### Status
 
@@ -118,6 +119,18 @@ If you are observing this behaviour, use the above line to automatically attempt
 	$.fn.matchHeight._groups
 
 The array that contains all element groups that have had `matchHeight` applied. Used for automatically updating on resize events. Search and modify this array if you need to remove any groups or elements, for example if you're deleting elements.
+
+### Known limitations
+
+#### CSS transitions and animations are not supported
+
+You should ensure that there are no transitions or other animations that will delay the height changes of the elements you are matching, including any `transition: all` rules. Otherwise the plugin will produce unexpected results, as animations can't be accounted for.
+
+#### Delayed webfonts may cause incorrect height
+
+Some browsers [do not wait](http://www.stevesouders.com/blog/2009/10/13/font-face-and-performance/) for webfonts to load before firing the window load event, so if the font loads too slowly the plugin may produce unexpected results.
+
+If this is a problem, you should call `_update` once your font has loaded by using something like the [webfontloader](https://github.com/typekit/webfontloader) script.
 
 ### Changelog
 
