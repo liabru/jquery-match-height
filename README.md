@@ -23,6 +23,7 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 - data attributes API
 - can be removed when needed
 - maintain scroll position correctly
+- callback events
 - tested in IE8+, Chrome, Firefox, Chrome Android
 
 ### Status
@@ -79,6 +80,20 @@ Use the data attribute `data-match-height="group-name"` (or `data-mh` shorthand)
 All elements with the same group name will be set to the same height when the page is loaded, regardless of their position in the DOM, without any extra code required. 
 
 Note that `byRow` will be enabled when using the data API, if you don't want this then use the alternative method above.
+
+#### Callback events
+
+Since matchHeight automatically handles updating the layout after certain window events, you can supply functions as global callbacks if you need to be notified:
+
+    $.fn.matchHeight._beforeUpdate = function(event, groups) {
+        // do something before any updates are applied
+    }
+
+    $.fn.matchHeight._afterUpdate = function(event, groups) {
+        // do something after all updates are applied
+    }
+
+Where `event` a jQuery event object (e.g. `load`, `resize`, `orientationchange`) and `groups` is a reference to `$.fn.matchHeight._groups` (see below).
 
 #### Removing
 

@@ -109,6 +109,8 @@
     $.fn.matchHeight._groups = [];
     $.fn.matchHeight._throttle = 80;
     $.fn.matchHeight._maintainScroll = false;
+    $.fn.matchHeight._beforeUpdate = null;
+    $.fn.matchHeight._afterUpdate = null;
 
     /*
     *  $.fn.matchHeight._apply
@@ -242,10 +244,16 @@
     *  updates matchHeight on all current groups with their correct options
     */
 
-    var _update = function() {
+    var _update = function(event) {
+        if ($.fn.matchHeight._beforeUpdate)
+            $.fn.matchHeight._beforeUpdate(event, $.fn.matchHeight._groups);
+
         $.each($.fn.matchHeight._groups, function() {
             $.fn.matchHeight._apply(this.elements, this.byRow);
         });
+
+        if ($.fn.matchHeight._afterUpdate)
+            $.fn.matchHeight._afterUpdate(event, $.fn.matchHeight._groups);
     };
 
     $.fn.matchHeight._update = function(throttle, event) {
@@ -261,10 +269,10 @@
 
         // throttle updates
         if (!throttle) {
-            _update();
+            _update(event);
         } else if (_updateTimeout === -1) {
             _updateTimeout = setTimeout(function() {
-                _update();
+                _update(event);
                 _updateTimeout = -1;
             }, $.fn.matchHeight._throttle);
         }
@@ -279,7 +287,7 @@
 
     // update heights on load and resize events
     $(window).bind('load', function(event) {
-        $.fn.matchHeight._update();
+        $.fn.matchHeight._update(false, event);
     });
 
     // throttled update heights on resize events
