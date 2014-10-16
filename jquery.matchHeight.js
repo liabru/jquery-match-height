@@ -61,11 +61,11 @@
     };
 
     /*
-    *  $.fn.matchHeight
+    *  matchHeight
     *  plugin definition
     */
 
-    $.fn.matchHeight = function(byRow) {
+    var matchHeight = $.fn.matchHeight = function(byRow) {
 
         // handle matchHeight('remove')
         if (byRow === 'remove') {
@@ -75,7 +75,7 @@
             this.css('height', '');
 
             // remove selected elements from all groups
-            $.each($.fn.matchHeight._groups, function(key, group) {
+            $.each(matchHeight._groups, function(key, group) {
                 group.elements = group.elements.not(that);
             });
 
@@ -91,13 +91,13 @@
         byRow = (typeof byRow !== 'undefined') ? byRow : true;
 
         // keep track of this group so we can re-apply later on load and resize events
-        $.fn.matchHeight._groups.push({
+        matchHeight._groups.push({
             elements: this,
             byRow: byRow
         });
 
         // match each element's height to the tallest element in the selection
-        $.fn.matchHeight._apply(this, byRow);
+        matchHeight._apply(this, byRow);
 
         return this;
     };
@@ -106,18 +106,18 @@
     *  plugin global options
     */
 
-    $.fn.matchHeight._groups = [];
-    $.fn.matchHeight._throttle = 80;
-    $.fn.matchHeight._maintainScroll = false;
-    $.fn.matchHeight._beforeUpdate = null;
-    $.fn.matchHeight._afterUpdate = null;
+    matchHeight._groups = [];
+    matchHeight._throttle = 80;
+    matchHeight._maintainScroll = false;
+    matchHeight._beforeUpdate = null;
+    matchHeight._afterUpdate = null;
 
     /*
-    *  $.fn.matchHeight._apply
+    *  matchHeight._apply
     *  apply matchHeight to given elements
     */
 
-    $.fn.matchHeight._apply = function(elements, byRow) {
+    matchHeight._apply = function(elements, byRow) {
         var $elements = $(elements),
             rows = [$elements];
 
@@ -208,18 +208,18 @@
         $hiddenParents.css('display', '');
 
         // restore scroll position if enabled
-        if ($.fn.matchHeight._maintainScroll)
+        if (matchHeight._maintainScroll)
             $(window).scrollTop((scrollTop / htmlHeight) * $('html').outerHeight(true));
 
         return this;
     };
 
     /*
-    *  $.fn.matchHeight._applyDataApi
+    *  matchHeight._applyDataApi
     *  applies matchHeight to all elements with a data-match-height attribute
     */
 
-    $.fn.matchHeight._applyDataApi = function() {
+    matchHeight._applyDataApi = function() {
         var groups = {};
 
         // generate groups by their groupId set by elements using data-match-height
@@ -240,23 +240,23 @@
     };
 
     /*
-    *  $.fn.matchHeight._update
+    *  matchHeight._update
     *  updates matchHeight on all current groups with their correct options
     */
 
     var _update = function(event) {
-        if ($.fn.matchHeight._beforeUpdate)
-            $.fn.matchHeight._beforeUpdate(event, $.fn.matchHeight._groups);
+        if (matchHeight._beforeUpdate)
+            matchHeight._beforeUpdate(event, matchHeight._groups);
 
-        $.each($.fn.matchHeight._groups, function() {
-            $.fn.matchHeight._apply(this.elements, this.byRow);
+        $.each(matchHeight._groups, function() {
+            matchHeight._apply(this.elements, this.byRow);
         });
 
-        if ($.fn.matchHeight._afterUpdate)
-            $.fn.matchHeight._afterUpdate(event, $.fn.matchHeight._groups);
+        if (matchHeight._afterUpdate)
+            matchHeight._afterUpdate(event, matchHeight._groups);
     };
 
-    $.fn.matchHeight._update = function(throttle, event) {
+    matchHeight._update = function(throttle, event) {
         // prevent update if fired from a resize event
         // where the viewport width hasn't actually changed
         // fixes an event looping bug in IE8
@@ -274,7 +274,7 @@
             _updateTimeout = setTimeout(function() {
                 _update(event);
                 _updateTimeout = -1;
-            }, $.fn.matchHeight._throttle);
+            }, matchHeight._throttle);
         }
     };
 
@@ -283,16 +283,16 @@
     */
 
     // apply on DOM ready event
-    $($.fn.matchHeight._applyDataApi);
+    $(matchHeight._applyDataApi);
 
     // update heights on load and resize events
     $(window).bind('load', function(event) {
-        $.fn.matchHeight._update(false, event);
+        matchHeight._update(false, event);
     });
 
     // throttled update heights on resize events
     $(window).bind('resize orientationchange', function(event) {
-        $.fn.matchHeight._update(true, event);
+        matchHeight._update(true, event);
     });
 
 })(jQuery);
