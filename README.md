@@ -1,6 +1,6 @@
 # jquery.matchHeight.js #
 
-*matchHeight* makes the height of all selected elements exactly equal.<br>
+> *matchHeight* makes the height of all selected elements exactly equal.<br>
 It handles many edge cases that cause similar plugins to fail.
 
 [brm.io/jquery-match-height](http://brm.io/jquery-match-height/)
@@ -146,6 +146,10 @@ You should ensure that there are no transitions or other animations that will de
 Some browsers [do not wait](http://www.stevesouders.com/blog/2009/10/13/font-face-and-performance/) for webfonts to load before firing the window load event, so if the font loads too slowly the plugin may produce unexpected results.
 
 If this is a problem, you should call `_update` once your font has loaded by using something like the [webfontloader](https://github.com/typekit/webfontloader) script.
+
+#### Content changes require a manual update
+
+If you change the content inside an element that has had `matchHeight` applied, then you must manually call `$.fn.matchHeight._update()` afterwards. This will update of all currently set equal heights groups.
 
 ### Changelog
 
