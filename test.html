@@ -26,7 +26,10 @@
 
                     // apply matchHeight to each item container's items
                     $('.items-container').each(function() {
-                        $(this).children('.item').matchHeight(byRow);
+                        $(this).children('.item').matchHeight({
+                            byRow: byRow
+                            //property: 'min-height'
+                        });
                     });
 
                     // example of removing matchHeight

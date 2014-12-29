@@ -129,6 +129,12 @@ Under certain conditions where the size of the page is dynamically changing, suc
 
 If you are observing this behaviour, use the above line to automatically attempt to force scroll position to be maintained (approximately). This is a global setting and by default it is `false`.
 
+#### Using `min-height`
+
+You can change the property that matchHeight will set by passing it via the options argument:
+
+	$('.item').matchHeight({ property: 'min-height' });
+
 #### Accessing groups directly
 
 	$.fn.matchHeight._groups

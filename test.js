@@ -23,7 +23,7 @@
         // update byRow option
         var byRow = $('body').hasClass('test-rows');
         $.each($.fn.matchHeight._groups, function() {
-            this.byRow = byRow;
+            this.options.byRow = byRow;
         });
 
         // update all heights

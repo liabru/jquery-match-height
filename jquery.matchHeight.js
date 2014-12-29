@@ -61,18 +61,46 @@
     };
 
     /*
+    *  _parseOptions
+    *  handle plugin options
+    */
+
+    var _parseOptions = function(options) {
+        var opts = {
+            byRow: true,
+            remove: false,
+            property: 'height'
+        };
+
+        if (typeof options === 'object') {
+            opts = $.extend(opts, options);
+        }
+
+        if (typeof options === 'boolean') {
+            opts.byRow = options;
+        }
+
+        if (options === 'remove') {
+            opts.remove = true;
+        }
+
+        return opts;
+    };
+
+    /*
     *  matchHeight
     *  plugin definition
     */
 
-    var matchHeight = $.fn.matchHeight = function(byRow) {
+    var matchHeight = $.fn.matchHeight = function(options) {
+        var opts = _parseOptions(options);
 
-        // handle matchHeight('remove')
-        if (byRow === 'remove') {
+        // handle remove
+        if (opts.remove) {
             var that = this;
 
             // remove fixed height from all selected elements
-            this.css('height', '');
+            this.css(opts.property, '');
 
             // remove selected elements from all groups
             $.each(matchHeight._groups, function(key, group) {
@@ -87,17 +115,14 @@
         if (this.length <= 1)
             return this;
 
-        // byRow default to true
-        byRow = (typeof byRow !== 'undefined') ? byRow : true;
-
         // keep track of this group so we can re-apply later on load and resize events
         matchHeight._groups.push({
             elements: this,
-            byRow: byRow
+            options: opts
         });
 
         // match each element's height to the tallest element in the selection
-        matchHeight._apply(this, byRow);
+        matchHeight._apply(this, opts);
 
         return this;
     };
@@ -117,8 +142,9 @@
     *  apply matchHeight to given elements
     */
 
-    matchHeight._apply = function(elements, byRow) {
-        var $elements = $(elements),
+    matchHeight._apply = function(elements, options) {
+        var opts = _parseOptions(options),
+            $elements = $(elements),
             rows = [$elements];
 
         // take note of scroll position
@@ -130,7 +156,7 @@
         $hiddenParents.css('display', 'block');
 
         // get rows if using byRow, otherwise assume one row
-        if (byRow) {
+        if (opts.byRow) {
 
             // must first force an arbitrary equal height so floating elements break evenly
             $elements.each(function() {
@@ -169,7 +195,7 @@
                 maxHeight = 0;
 
             // skip apply to rows with only one item
-            if (byRow && $row.length <= 1)
+            if (opts.byRow && $row.length <= 1)
                 return;
 
             // iterate the row and find the max height
@@ -178,7 +204,9 @@
                     display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
 
                 // ensure we get the correct actual height (and not a previously set height value)
-                $that.css({ 'display': display, 'height': '' });
+                var css = { 'display': display };
+                css[opts.property] = '';
+                $that.css(css);
 
                 // find the max height (including padding, but not margin)
                 if ($that.outerHeight(false) > maxHeight)
@@ -200,7 +228,7 @@
                 }
 
                 // set the height (accounting for padding and border)
-                $that.css('height', maxHeight - verticalPadding);
+                $that.css(opts.property, maxHeight - verticalPadding);
             });
         });
 
@@ -249,7 +277,7 @@
             matchHeight._beforeUpdate(event, matchHeight._groups);
 
         $.each(matchHeight._groups, function() {
-            matchHeight._apply(this.elements, this.byRow);
+            matchHeight._apply(this.elements, this.options);
         });
 
         if (matchHeight._afterUpdate)
