@@ -153,6 +153,10 @@
 
         // temporarily must force hidden parents visible
         var $hiddenParents = $elements.parents().filter(':hidden');
+        // cache original display attribute
+        $hiddenParents.each(function() {
+            $(this).attr('data-display-cache', $(this).css('display'))
+        });
         $hiddenParents.css('display', 'block');
 
         // get rows if using byRow, otherwise assume one row
@@ -232,8 +236,10 @@
             });
         });
 
-        // revert hidden parents
-        $hiddenParents.css('display', '');
+        // revert hidden parents from cache
+        $hiddenParents.each(function() {
+            $(this).css('display', $(this).attr('data-original-display'))
+        });
 
         // restore scroll position if enabled
         if (matchHeight._maintainScroll)
