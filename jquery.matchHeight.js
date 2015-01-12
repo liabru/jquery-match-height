@@ -149,8 +149,16 @@
         var scrollTop = $(window).scrollTop(),
             htmlHeight = $('html').outerHeight(true);
 
-        // temporarily must force hidden parents visible
+        // get hidden parents
         var $hiddenParents = $elements.parents().filter(':hidden');
+
+        // cache the original inline style
+        $hiddenParents.each(function() {
+            var $that = $(this);
+            $that.data('style-cache', $that.attr('style'));
+        });
+
+        // temporarily must force hidden parents visible
         $hiddenParents.css('display', 'block');
 
         // get rows if using byRow, otherwise assume one row
@@ -229,7 +237,10 @@
         });
 
         // revert hidden parents
-        $hiddenParents.css('display', '');
+        $hiddenParents.each(function() {
+            var $that = $(this);
+            $that.attr('style', $that.data('style-cache') || null);
+        });
 
         // restore scroll position if enabled
         if (matchHeight._maintainScroll)
