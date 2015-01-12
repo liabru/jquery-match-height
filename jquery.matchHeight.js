@@ -184,9 +184,7 @@
             // revert original inline styles
             $elements.each(function() {
                 var $that = $(this);
-
-                $that.attr('style', $that.data('style-cache') || '')
-                     .css('height', '');
+                $that.attr('style', $that.data('style-cache') || '');
             });
         }
 
