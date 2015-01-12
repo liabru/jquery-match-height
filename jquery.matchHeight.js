@@ -73,14 +73,12 @@
         };
 
         if (typeof options === 'object') {
-            opts = $.extend(opts, options);
+            return $.extend(opts, options);
         }
 
         if (typeof options === 'boolean') {
             opts.byRow = options;
-        }
-
-        if (options === 'remove') {
+        } else if (options === 'remove') {
             opts.remove = true;
         }
 
