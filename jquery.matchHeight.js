@@ -241,7 +241,8 @@
                 }
                 newHeight = maxHeight - verticalPadding;
                 // set the height (accounting for padding and border)
-                if($childToResize.length){
+                if($childToResize&&$childToResize.length){
+                    alert('aa');
                     childHeight = $childToResize.outerHeight(false);
                     parentHeight = $that.outerHeight(false);
                     childToResizeHeight = newHeight - parentHeight + childHeight;
