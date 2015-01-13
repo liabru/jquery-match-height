@@ -346,4 +346,4 @@
         matchHeight._update(true, event);
     });
 
-})(jQuery);a
+})(jQuery);
