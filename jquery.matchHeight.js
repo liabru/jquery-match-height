@@ -1,22 +1,22 @@
 /**
-* jquery.matchHeight.js v0.5.2
-* http://brm.io/jquery-match-height/
-* License: MIT
-*/
+ * jquery.matchHeight.js v0.5.2
+ * http://brm.io/jquery-match-height/
+ * License: MIT
+ */
 
 ;(function($) {
     /*
-    *  internal
-    */
+     *  internal
+     */
 
     var _previousResizeWidth = -1,
         _updateTimeout = -1;
 
     /*
-    *  _rows
-    *  utility function returns array of jQuery selections representing each row
-    *  (as displayed after float wrapping applied by browser)
-    */
+     *  _rows
+     *  utility function returns array of jQuery selections representing each row
+     *  (as displayed after float wrapping applied by browser)
+     */
 
     var _rows = function(elements) {
         var tolerance = 1,
@@ -51,9 +51,9 @@
     };
 
     /*
-    *  _parse
-    *  value parse utility function
-    */
+     *  _parse
+     *  value parse utility function
+     */
 
     var _parse = function(value) {
         // parse value and convert NaN to 0
@@ -61,15 +61,16 @@
     };
 
     /*
-    *  _parseOptions
-    *  handle plugin options
-    */
+     *  _parseOptions
+     *  handle plugin options
+     */
 
     var _parseOptions = function(options) {
         var opts = {
             byRow: true,
             remove: false,
-            property: 'height'
+            property: 'height',
+            childToResize: false//Choose the child to resize
         };
 
         if (typeof options === 'object') {
@@ -86,9 +87,9 @@
     };
 
     /*
-    *  matchHeight
-    *  plugin definition
-    */
+     *  matchHeight
+     *  plugin definition
+     */
 
     var matchHeight = $.fn.matchHeight = function(options) {
         var opts = _parseOptions(options);
@@ -126,8 +127,8 @@
     };
 
     /*
-    *  plugin global options
-    */
+     *  plugin global options
+     */
 
     matchHeight._groups = [];
     matchHeight._throttle = 80;
@@ -136,9 +137,9 @@
     matchHeight._afterUpdate = null;
 
     /*
-    *  matchHeight._apply
-    *  apply matchHeight to given elements
-    */
+     *  matchHeight._apply
+     *  apply matchHeight to given elements
+     */
 
     matchHeight._apply = function(elements, options) {
         var opts = _parseOptions(options),
@@ -223,16 +224,31 @@
             // iterate the row and apply the height to all elements
             $row.each(function(){
                 var $that = $(this),
+                    $childToResize,
+                    newHeight,
+                    childHeight,
+                    parentHeight,
+                    childToResizeHeight,
                     verticalPadding = 0;
 
+                if(opts.childToResize){
+                    $childToResize = $that.find(opts.childToResize);
+                }
                 // handle padding and border correctly (required when not using border-box)
                 if ($that.css('box-sizing') !== 'border-box') {
                     verticalPadding += _parse($that.css('border-top-width')) + _parse($that.css('border-bottom-width'));
                     verticalPadding += _parse($that.css('padding-top')) + _parse($that.css('padding-bottom'));
                 }
-
+                newHeight = maxHeight - verticalPadding;
                 // set the height (accounting for padding and border)
-                $that.css(opts.property, maxHeight - verticalPadding);
+                if($childToResize&&$childToResize.length){
+                    childHeight = $childToResize.outerHeight(false);
+                    parentHeight = $that.outerHeight(false);
+                    childToResizeHeight = newHeight - parentHeight + childHeight;
+                    $childToResize.css(opts.property, childToResizeHeight);
+                }else {
+                    $that.css(opts.property, newHeight);
+                }
             });
         });
 
@@ -250,9 +266,9 @@
     };
 
     /*
-    *  matchHeight._applyDataApi
-    *  applies matchHeight to all elements with a data-match-height attribute
-    */
+     *  matchHeight._applyDataApi
+     *  applies matchHeight to all elements with a data-match-height attribute
+     */
 
     matchHeight._applyDataApi = function() {
         var groups = {};
@@ -275,9 +291,9 @@
     };
 
     /*
-    *  matchHeight._update
-    *  updates matchHeight on all current groups with their correct options
-    */
+     *  matchHeight._update
+     *  updates matchHeight on all current groups with their correct options
+     */
 
     var _update = function(event) {
         if (matchHeight._beforeUpdate)
@@ -314,8 +330,8 @@
     };
 
     /*
-    *  bind events
-    */
+     *  bind events
+     */
 
     // apply on DOM ready event
     $(matchHeight._applyDataApi);
