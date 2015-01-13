@@ -328,7 +328,7 @@
             }, matchHeight._throttle);
         }
     };
-ddfd
+
     /*
      *  bind events
      */
