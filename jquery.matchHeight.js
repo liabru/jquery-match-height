@@ -199,8 +199,10 @@
                 maxHeight = 0;
 
             // skip apply to rows with only one item
-            if (opts.byRow && $row.length <= 1)
+            if (opts.byRow && $row.length <= 1) {
+                $row.css(opts.property, '');
                 return;
+            }
 
             // iterate the row and find the max height
             $row.each(function(){
