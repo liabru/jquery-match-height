@@ -13,22 +13,25 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 
 ### Features
 
-- match the heights of elements anywhere on the page
-- row aware, handles floating elements
-- responsive, automatically updates on window resize (can be throttled for performance)
-- handles mixed `padding`, `margin`, `border` values (even if every element has them different)
-- handles images and other media (updates automatically after loading)
-- handles hidden or none-visible elements (e.g. those inside tab controls)
-- accounts for `box-sizing`
+- match the heights for groups of elements automatically
+- use the maximum height or define a specific target element
+- anywhere on the page and anywhere in the DOM
+- responsive (updates on window resize)
+- row aware (handles floating elements and wrapping)
+- accounts for `box-sizing` and mixed `padding`, `margin`, `border` values
+- handles images and other media (updates after loading)
+- supports hidden or none-visible elements (e.g. those inside tab controls)
+- throttled to balance performance and smoothness
+- easily removed when needed
+- maintain scroll position
 - data attributes API
-- can be removed when needed
-- maintain scroll position correctly
 - callback events
 - tested in IE8+, Chrome, Firefox, Chrome Android
 
 ### Status
 
-Current version is `v0.5.2`. I've fully tested it and it works well, but if you use it make sure you test fully too. 
+Current version is `v0.5.2`. <br>
+Use the master build for the latest features. <br>
 Please report any [issues](https://github.com/liabru/jquery-match-height/issues) you find.
 
 ### Install
@@ -44,12 +47,33 @@ Please report any [issues](https://github.com/liabru/jquery-match-height/issues)
 
 ### Usage
 
-	$(elements).matchHeight(byRow);
+	$(elements).matchHeight(options);
 
-Where `byRow` is a boolean that enables or disables row detection, default is `true`.<br>
-You should apply this on the [DOM ready](http://api.jquery.com/ready/) event.
+Where options is an optional parameter. <br>
+See below for a description of the available options and defaults.
 
-See the included [test.html](https://github.com/liabru/jquery-match-height/blob/master/test.html) for a working example.
+Call this on the [DOM ready](http://api.jquery.com/ready/) event (the plugin will automatically update on window load). <br>
+See below for examples or the included [test.html](https://github.com/liabru/jquery-match-height/blob/master/test.html).
+
+Also see the [Data API](#data-api) below for a simple, alternative inline usage.
+
+### Options
+
+The default options are:
+
+    $(elements).matchHeight({
+        byRow: true,
+        property: 'height',
+        target: null,
+        remove: false
+    });
+
+Where:
+
+- `byRow` is `true` or `false` to enable row detection
+- `property` is the CSS property name to set (e.g. `'height'` or `'min-height'`)
+- `target` is an optional element to use instead of the element with maximum height
+- `remove` is `true` or `false` to remove previous bindings instead of applying new ones
 
 ### Examples
 
@@ -57,29 +81,44 @@ See the included [test.html](https://github.com/liabru/jquery-match-height/blob/
 		$('.item').matchHeight();
 	});
 
-Will set all elements with the class `item` to the height of the tallest.<br>
-If the items are on multiple rows, the items of each row will be set to the tallest of that row.
+The above will set all elements with the class `item` to the height of the tallest.<br>
+If the items are on multiple rows, the items of each row will be set to the tallest of that row (see `byRow`).
+
+	$(function() {
+		$('.item').matchHeight({
+            target: $('.sidebar')
+        });
+	});
+
+The above will set all elements with the class `item` to the height of the first item with class `sidebar`.
 
 	<div data-mh="my-group">My text</div>
 	<div data-mh="my-group">Some other text</div>
 	<div data-mh="my-other-group">Even more text</div>
 	<div data-mh="my-other-group">The last bit of text</div>
 
-Will set both elements in `my-group` to the same height, then both elements in `my-other-group` to be the same height respectively.
+The above will set both elements in `my-group` to the same height as each other.
+It will set both elements in `my-other-group` to be the same height as each other.
 
 See the included [test.html](https://github.com/liabru/jquery-match-height/blob/master/test.html) for a working example.
+
+### Data API
+
+Use the data attribute `data-mh="group-name"` where `group-name` is an arbitrary string to identify which elements should be considered as a group.
+
+All elements with the same group name will be set to the same height when the page is loaded, regardless of their position in the DOM, without any extra code required. 
+
+Note that `byRow` will be enabled when using the data API, if you don't want this (or require other options) then use the alternative method above.
 
 ### Advanced Usage
 
 There are a few internal properties and functions you should know about:
 
-#### Data API
+#### Manually trigger an update
 
-Use the data attribute `data-match-height="group-name"` (or `data-mh` shorthand) where `group-name` is an arbitrary string to denote which elements should be considered as a group.
+	$.fn.matchHeight._update()
 
-All elements with the same group name will be set to the same height when the page is loaded, regardless of their position in the DOM, without any extra code required. 
-
-Note that `byRow` will be enabled when using the data API, if you don't want this then use the alternative method above.
+If you need to manually trigger an update of all currently set groups, for example if you've modified some content.
 
 #### Callback events
 
@@ -95,21 +134,9 @@ Since matchHeight automatically handles updating the layout after certain window
 
 Where `event` a jQuery event object (e.g. `load`, `resize`, `orientationchange`) and `groups` is a reference to `$.fn.matchHeight._groups` (see below).
 
-#### Removing
-
-It is possible to remove any matchHeight bindings for a given set of elements like so
-
-	$('.item').matchHeight('remove');
-
-#### Manually trigger an update
-
-	$.fn.matchHeight._update()
-
-If you need to manually trigger an update of all currently set equal heights groups, for example if you've modified some content.
-
 #### Manually apply match height
 
-	$.fn.matchHeight._apply(elements, byRow)
+	$.fn.matchHeight._apply(elements, options)
 
 Use the apply function directly if you wish to avoid the automatic update functionality.
 
@@ -129,17 +156,11 @@ Under certain conditions where the size of the page is dynamically changing, suc
 
 If you are observing this behaviour, use the above line to automatically attempt to force scroll position to be maintained (approximately). This is a global setting and by default it is `false`.
 
-#### Using `min-height`
-
-You can change the property that matchHeight will set by passing it via the options argument:
-
-	$('.item').matchHeight({ property: 'min-height' });
-
-#### Accessing groups directly
+#### Accessing current group bindings
 
 	$.fn.matchHeight._groups
 
-The array that contains all element groups that have had `matchHeight` applied. Used for automatically updating on resize events. Search and modify this array if you need to remove any groups or elements, for example if you're deleting elements.
+The array that contains all element groups that have had `matchHeight` applied. Used internally for automatically updating on resize events, but you may modify this array if you need to manually access any groups (e.g. if you're deleting elements).
 
 ### Known limitations
 
