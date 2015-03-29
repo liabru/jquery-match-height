@@ -28,14 +28,20 @@
                     $('.items-container').each(function() {
                         $(this).children('.item').matchHeight({
                             byRow: byRow
-                            //property: 'min-height'
+                        });
+                    });
+
+                    // test target
+                    $('.target-items').each(function() {
+                        $(this).children('.item-0, .item-2, .item-3').matchHeight({
+                            target: $(this).find('.item-1')
                         });
                     });
 
                     // example of removing matchHeight
                     $('.btn-remove').click(function() {
-                        $('.items-container').each(function() {
-                            $(this).children('.item').matchHeight('remove');
+                        $('.item').matchHeight({ 
+                            remove: true 
                         });
                     });
 
@@ -213,6 +219,31 @@
                 <div class="item item-3" data-mh="items-b">
                     <h3>data-mh="items-b"</h3>
                     <p>Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis.</p>
+                </div>
+            </div>
+
+            <div class="target-items">
+                <div class="item item-0">
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam.</p>
+                    <p>Aenean semper felis ipsum, vulputate consequat dui elementum vel.</p>
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis. Phasellus hendrerit erat sed porta imperdiet. Vivamus viverra ipsum tortor, et congue mauris porttitor ut.</p>
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis.</p>
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis. Phasellus hendrerit erat sed porta imperdiet. Vivamus viverra ipsum tortor, et congue mauris porttitor ut.</p>
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis.</p>
+                </div>
+                <div class="item item-1">
+                    <h3>Target</h3>
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis.</p>
+                </div>
+                <div class="item item-2">
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis. Phasellus hendrerit erat sed porta imperdiet. Vivamus viverra ipsum tortor, et congue mauris porttitor ut.</p>
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis. Phasellus hendrerit erat sed porta imperdiet. Vivamus viverra ipsum tortor, et congue mauris porttitor ut.</p>
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis.</p>
+                </div>
+                <div class="item item-3">
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam.</p>
+                    <p>Aenean semper felis ipsum, vulputate consequat dui elementum vel.</p>
+                    <p>Phasellus ut nibh fermentum, vulputate urna vel, semper diam. Nunc sollicitudin felis ut pellentesque fermentum. In erat mi, pulvinar sit amet tincidunt vitae, gravida id felis.</p>
                 </div>
             </div>
 
