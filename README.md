@@ -30,7 +30,7 @@ See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 
 ### Status
 
-Current version is `v0.5.2`. <br>
+Current version is `v0.6.0`. <br>
 Use the master build for the latest features. <br>
 Please report any [issues](https://github.com/liabru/jquery-match-height/issues) you find.
 
