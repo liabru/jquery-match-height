@@ -111,7 +111,7 @@
             return this;
         }
 
-        if (this.length <= 1 && !options.target) {
+        if (this.length <= 1 && !opts.target) {
             return this;
         }
 
