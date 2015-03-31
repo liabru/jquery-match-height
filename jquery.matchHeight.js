@@ -236,7 +236,7 @@
                     verticalPadding = 0;
 
                 // don't apply to a target
-                if ($that.is(opts.target)) {
+                if (opts.target && $that.is(opts.target)) {
                     return;
                 }
 
