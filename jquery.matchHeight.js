@@ -70,7 +70,8 @@
             byRow: true,
             property: 'height',
             target: null,
-            remove: false
+            remove: false,
+            mq: null
         };
 
         if (typeof options === 'object') {
@@ -120,6 +121,11 @@
             elements: this,
             options: opts
         });
+
+        // handle mediaquery 
+        if (opts.mq && window.matchMedia("only all").matches && !window.matchMedia(opts.mq).matches) {
+            return this;
+        }
 
         // match each element's height to the tallest element in the selection
         matchHeight._apply(this, opts);
@@ -302,6 +308,13 @@
         }
 
         $.each(matchHeight._groups, function() {
+
+            // handle mediaquery
+            if (this.options.mq && window.matchMedia("only all").matches && !window.matchMedia(this.options.mq).matches) {
+                this.elements.css(this.options.property, '');
+                return true;
+            }
+
             matchHeight._apply(this.elements, this.options);
         });
 
