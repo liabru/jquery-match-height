@@ -10,7 +10,8 @@
     */
 
     var _previousResizeWidth = -1,
-        _updateTimeout = -1;
+        _updateTimeout = -1,
+        _resizeTimer = -1;
 
     /*
     *  _parse
@@ -133,6 +134,7 @@
 
     matchHeight._groups = [];
     matchHeight._throttle = 80;
+    matchHeight._resizeTimeOut = 0;
     matchHeight._maintainScroll = false;
     matchHeight._beforeUpdate = null;
     matchHeight._afterUpdate = null;
@@ -321,16 +323,26 @@
             }
             _previousResizeWidth = windowWidth;
         }
-
-        // throttle updates
-        if (!throttle) {
-            _update(event);
-        } else if (_updateTimeout === -1) {
-            _updateTimeout = setTimeout(function() {
-                _update(event);
-                _updateTimeout = -1;
-            }, matchHeight._throttle);
+        
+        // clear the timeout when matchHeight._resizeTimeOut is not reached
+        if (_resizeTimer !== -1) {
+            clearTimeout(_resizeTimer);
         }
+        
+        // if the matchHeight._resizeTimeOut is defined correctly (~50ms), 
+        // the matchHeight._update() will run after resizing, 
+        // not while resizing
+        _resizeTimer = setTimeout(function() {
+            // throttle updates
+            if (!throttle) {
+                _update(event);
+            } else if (_updateTimeout === -1) {
+                _updateTimeout = setTimeout(function() {
+                    _update(event);
+                    _updateTimeout = -1;
+                }, matchHeight._throttle);
+            }
+        }, matchHeight._resizeTimeOut);
     };
 
     /*

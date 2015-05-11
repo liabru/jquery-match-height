@@ -148,6 +148,14 @@ By default, the `_update` method is throttled to execute at a maximum rate of on
 Decreasing the above `_throttle` property will update your layout quicker, appearing smoother during resize, at the expense of performance.
 If you experience lagging or freezing during resize, you should increase the `_throttle` property.
 
+#### Resize updates after resizing
+
+	$.fn.matchHeight._resizeTimeOut = 0;
+    
+By default, the `_update` method has no timeout during resize. That means, the `_update` method will get executed while resizing.
+If you experience lagging or freezing during resize, even with increasing the `_throttle` option, you should set the 
+`_resizeTimeOut` property to at least `50`. Now the `_update` method will execute after resizing.
+
 #### Maintain scroll position
 
 	$.fn.matchHeight._maintainScroll = true;
