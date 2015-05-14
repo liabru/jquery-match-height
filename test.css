@@ -278,3 +278,15 @@ a, a:link, a:visited, a:active, a:hover {
     /*width: 20%;*/
     float: none;
 }
+
+/* test inline-flex */
+
+.inline-flex-items {
+    text-align: center;
+}
+
+.inline-flex-items .item {
+    display: inline-flex;
+    vertical-align: top;
+    float: none;
+}

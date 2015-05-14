@@ -169,7 +169,12 @@
             // must first force an arbitrary equal height so floating elements break evenly
             $elements.each(function() {
                 var $that = $(this),
-                    display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
+                    display = $that.css('display');
+
+                // temporarily force a usable display value
+                if (display !== 'inline-block' && display !== 'inline-flex') {
+                    display = 'block';
+                }
 
                 // cache the original inline style
                 $that.data('style-cache', $that.attr('style'));
@@ -210,7 +215,12 @@
                 // iterate the row and find the max height
                 $row.each(function(){
                     var $that = $(this),
-                        display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
+                        display = $that.css('display');
+
+                    // temporarily force a usable display value
+                    if (display !== 'inline-block' && display !== 'inline-flex') {
+                        display = 'block';
+                    }
 
                     // ensure we get the correct actual height (and not a previously set height value)
                     var css = { 'display': display };
