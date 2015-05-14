@@ -247,7 +247,7 @@
                 }
 
                 // set the height (accounting for padding and border)
-                $that.css(opts.property, targetHeight - verticalPadding);
+                $that.css(opts.property, (targetHeight - verticalPadding) + 'px');
             });
         });
 
