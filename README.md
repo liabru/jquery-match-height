@@ -5,6 +5,8 @@ It handles many edge cases that cause similar plugins to fail.
 
 [brm.io/jquery-match-height](http://brm.io/jquery-match-height/)
 
+[![](http://api.libscore.com/badge/$.fn.matchHeight.svg)](http://libscore.com#$.fn.matchHeight)
+
 ### Demo
 
 See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
