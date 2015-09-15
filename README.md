@@ -43,7 +43,7 @@ Please report any [issues](https://github.com/liabru/jquery-match-height/issues)
 
 	<script src="jquery.matchHeight.js" type="text/javascript"></script>
 
-You can also install using the package managers [Bower](http://bower.io/search/?q=matter-js) and [NPM](https://www.npmjs.org/package/matter-js).
+You can also install using the package managers [Bower](http://bower.io/search/?q=matchHeight) and [NPM](https://www.npmjs.com/package/jquery-match-height).
 
     bower install jquery-match-height
     npm install jquery-match-height
