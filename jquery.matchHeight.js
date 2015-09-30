@@ -70,7 +70,8 @@
             byRow: true,
             property: 'height',
             target: null,
-            remove: false
+            remove: false,
+            offsetHeight: 0
         };
 
         if (typeof options === 'object') {
@@ -239,6 +240,9 @@
                 // if target set, use the height of the target element
                 targetHeight = opts.target.outerHeight(false);
             }
+
+			// If there's an offsetHeight option, add it to the targetHeight
+            targetHeight = (opts.offsetHeight > 0) ? targetHeight + opts.offsetHeight : targetHeight;
 
             // iterate the row and apply the height to all elements
             $row.each(function(){
