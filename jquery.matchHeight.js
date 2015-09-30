@@ -70,7 +70,8 @@
             byRow: true,
             property: 'height',
             target: null,
-            remove: false
+            remove: false,
+            maintainScroll: false
         };
 
         if (typeof options === 'object') {
@@ -268,6 +269,7 @@
         });
 
         // restore scroll position if enabled
+        matchHeight._maintainScroll = opts.maintainScroll;
         if (matchHeight._maintainScroll) {
             $(window).scrollTop((scrollTop / htmlHeight) * $('html').outerHeight(true));
         }
