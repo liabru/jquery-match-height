@@ -68,7 +68,8 @@ The default options are:
         byRow: true,
         property: 'height',
         target: null,
-        remove: false
+        remove: false,
+        maintainScroll: false
     });
 
 Where:
@@ -77,6 +78,7 @@ Where:
 - `property` is the CSS property name to set (e.g. `'height'` or `'min-height'`)
 - `target` is an optional element to use instead of the element with maximum height
 - `remove` is `true` or `false` to remove previous bindings instead of applying new ones
+- `maintainScroll` is `true` or `false` to revert scroll before execute matchHeight
 
 ### Examples
 
