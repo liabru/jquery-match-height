@@ -305,3 +305,18 @@ a.test-summary.has-failed {
     vertical-align: top;
     float: none;
 }
+
+/* test with-float */
+
+.with-float .item-0 {
+    float: none;
+    width: auto;
+}
+
+.with-float .item-0 div {
+    display: inline-block;
+    float: left;
+    width: 150px;
+    height: 150px;
+    background: green;
+}
