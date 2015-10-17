@@ -17,5 +17,18 @@
     "height",
     "equalize",
     "columns"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/liabru/jquery-match-height/issues"
+  },
+  "scripts": {
+    "test": "gulp test"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-webdriver": "^1.0.1",
+    "gulp-webserver": "^0.9.1",
+    "jasmine": "^2.3.2",
+    "webdriverio": "^3.2.5"
+  }
 }
