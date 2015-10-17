@@ -15,9 +15,10 @@ body {
 h1 {
     color: #fff;
     display: block;
-    margin: 0 0 1em 0;
+    margin: 0 0 0.5em 0;
     font-weight: normal;
     font-size: 30px;
+    line-height: 1.5;
 }
 
 h2 {
@@ -44,25 +45,39 @@ ul {
 }
 
 a, a:link, a:visited, a:active, a:hover {
+    display: inline-block;
     color: #ccc;
     text-decoration: none;
     border-bottom: 1px solid #555;
-    padding: 0 0 2px 0;
+    padding: 3px 0;
+    margin: 3px 0;
 }
 
 .container {
     width: 80%;
     margin: 0 auto;
-    padding: 60px 20px;
+    padding: 45px 20px;
 }
 
 .nav-sep {
     padding: 0 5px;
 }
 
+a.test-summary {
+    color: #EDC951;
+}
+
+a.test-summary.has-passed {
+    color: #33CC61;
+}
+
+a.test-summary.has-failed {
+    color: #CC333F;
+}
+
 .controls {
     overflow: hidden;
-    margin: 60px 0 30px 0;
+    margin: 40px 0 30px 0;
 }
 
 .controls .checkbox {
@@ -74,7 +89,7 @@ a, a:link, a:visited, a:active, a:hover {
 
 .btn-remove,
 .btn-hidden {
-    margin: -8px 20px 0 20px;
+    margin: 0 15px 11px 0px;
     line-height: 1;
     border: 0;
     background: #ddd;
@@ -85,7 +100,7 @@ a, a:link, a:visited, a:active, a:hover {
 /* test items */
 
 .items-container,
-.data-test-items,
+.data-api-items,
 .target-items {
     overflow: hidden;
     margin: 0 -1%;
@@ -146,7 +161,7 @@ a, a:link, a:visited, a:active, a:hover {
     margin-bottom: 0;
 }
 
-.items-container.big-items .item {
+.items-container.nested-items-parent .item {
     width: 48%;
 }
 
@@ -232,14 +247,14 @@ a, a:link, a:visited, a:active, a:hover {
 
 @media only screen and (max-width: 1024px) {
     .item,
-    .items-container.big-items .item {
+    .items-container.nested-items-parent .item {
         width: 48%;
     }
 }
 
 @media only screen and (max-width: 640px) {
     .test-margin .item,
-    .test-margin .items-container.big-items .item {
+    .test-margin .items-container.nested-items-parent .item {
         width: 99%;
         margin-left: 0;
         margin-right: 0;

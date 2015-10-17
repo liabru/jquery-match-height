@@ -136,6 +136,7 @@
     matchHeight._maintainScroll = false;
     matchHeight._beforeUpdate = null;
     matchHeight._afterUpdate = null;
+    matchHeight._rows = _rows;
 
     /*
     *  matchHeight._apply
