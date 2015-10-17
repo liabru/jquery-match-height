@@ -84,7 +84,7 @@ describe('matchHeight', function() {
 
     it('has matched heights when byRow true', function(done) {
         $('.simple-items, .image-items, .nested-items-parent, .nested-items,' +
-          '.fixed-items, .inline-block-items, .inline-flex-items')
+          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float')
         .each(function() {
             var $items = $(this).children('.item'),
                 rows = $.fn.matchHeight._rows($items);
@@ -125,7 +125,7 @@ describe('matchHeight', function() {
         $.fn.matchHeight._update();
 
         $('.simple-items, .image-items,' +
-          '.fixed-items, .inline-block-items, .inline-flex-items')
+          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float')
         .each(function() {
             var $items = $(this).children('.item'),
                 targetHeight = $items.first().outerHeight(),
