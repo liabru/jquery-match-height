@@ -1,8 +1,7 @@
-// TODO: run these tests for all breakpoints
-
-describe('matchHeight browser tests', function() {
-    it('passes all specs in matchHeight.spec.js', function(done) {
+describe('matchHeight webdriver', function() {
+    var runAllTests = function(done, width, height) {
         browser
+        .setViewportSize({ width: width, height: height })
         .url('http://localhost:8000/test/page/test.html')
         .waitForExist('.jasmine_html-reporter', 5000)
         .execute(function() {
@@ -16,5 +15,17 @@ describe('matchHeight browser tests', function() {
             expect(ret.value.passed).toBe(ret.value.total, 'number of specs passed');
             expect(ret.value.failed).toBe(0, 'number of specs failed');
         }).call(done);
+    };
+
+    it('passes matchHeight.spec.js at desktop breakpoint', function(done) {
+        runAllTests(done, 1280, 1024);
+    });
+
+    it('passes matchHeight.spec.js at tablet breakpoint', function(done) {
+        runAllTests(done, 640, 480);
+    });
+
+    it('passes matchHeight.spec.js at mobile breakpoint', function(done) {
+        runAllTests(done, 320, 640);
     });
 });
