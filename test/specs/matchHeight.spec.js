@@ -96,6 +96,15 @@ describe('matchHeight', function() {
     });
 
     it('has matched heights when byRow true', function(done) {
+        // test custom toBeWithinTolerance matcher
+        expect(-1.0001).not.toBeWithinTolerance(0);
+        expect(-1).toBeWithinTolerance(0);
+        expect(-0.1).toBeWithinTolerance(0);
+        expect(0).toBeWithinTolerance(0);
+        expect(0.1).toBeWithinTolerance(0);
+        expect(1).toBeWithinTolerance(0);
+        expect(1.0001).not.toBeWithinTolerance(0);
+
         $('.simple-items, .image-items, .nested-items-parent, .nested-items,' +
           '.fixed-items, .inline-block-items, .inline-flex-items')
         .each(function() {
