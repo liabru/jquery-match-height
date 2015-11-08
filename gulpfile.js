@@ -7,6 +7,7 @@ var rename = require('gulp-rename');
 var header = require('gulp-header');
 var eslint = require('gulp-eslint');
 var gulpBump = require('gulp-bump');
+var changelog = require('gulp-conventional-changelog');
 var tag = require('gulp-tag-version');
 var sequence = require('run-sequence');
 var webdriver = require('gulp-webdriver');
@@ -20,7 +21,7 @@ var server;
 
 gulp.task('release', function(callback) {
     var type = process.argv[4] || 'minor';
-    sequence('lint', 'test', 'build', 'bump:' + type, 'tag', callback);
+    sequence('lint', 'test', 'build', 'bump:' + type, 'changelog', 'tag', callback);
 });
 
 gulp.task('build', function() {
@@ -59,6 +60,12 @@ gulp.task('bump:major', function() {
 gulp.task('tag', function() {
     return gulp.src('package.json')
         .pipe(tag({ prefix: '' }));
+});
+
+gulp.task('changelog', function () {
+    return gulp.src('CHANGELOG.md')
+        .pipe(changelog())
+        .pipe(gulp.dest('.'));
 });
 
 gulp.task('serve', function() {
