@@ -106,7 +106,7 @@ describe('matchHeight', function() {
         expect(1.0001).not.toBeWithinTolerance(0);
 
         $('.simple-items, .image-items, .nested-items-parent, .nested-items,' +
-          '.fixed-items, .inline-block-items, .inline-flex-items')
+          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float')
         .each(function() {
             var $items = $(this).children('.item'),
                 rows = $.fn.matchHeight._rows($items);
@@ -147,7 +147,7 @@ describe('matchHeight', function() {
         $.fn.matchHeight._update();
 
         $('.simple-items, .image-items,' +
-          '.fixed-items, .inline-block-items, .inline-flex-items')
+          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float')
         .each(function() {
             var $items = $(this).children('.item'),
                 targetHeight = $items.first().outerHeight(),

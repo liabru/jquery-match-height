@@ -191,7 +191,8 @@
                     'margin-bottom': '0',
                     'border-top-width': '0',
                     'border-bottom-width': '0',
-                    'height': '100px'
+                    'height': '100px',
+                    'overflow': 'hidden'
                 });
             });
 
