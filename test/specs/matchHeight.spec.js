@@ -1,14 +1,10 @@
 // NOTE: these test specs are a work in progress
 // manual testing before going into production is still advised!
+// the following features are implemented, but do not have specs yet:
 
-// TODO: spec for _parse
-// TODO: spec for _parseOptions
 // TODO: spec for $(elements).matchHeight({ property: 'min-height' })
 // TODO: spec for $(elements).matchHeight({ remove: true })
 // TODO: spec for events: ready, load, resize, orientationchange
-// TODO: spec for $.fn.matchHeight._update
-// TODO: spec for $.fn.matchHeight._beforeUpdate
-// TODO: spec for $.fn.matchHeight._afterUpdate
 // TODO: spec for $.fn.matchHeight._groups
 // TODO: spec for $.fn.matchHeight._throttle
 // TODO: spec for $.fn.matchHeight._maintainScroll
@@ -16,6 +12,24 @@
 
 
 describe('matchHeight', function() {
+    beforeEach(function(){
+      jasmine.addMatchers({
+        toBeWithinTolerance: function() {
+          return {
+            compare: function(actual, expected, tolerance) {
+              if (tolerance !== 0) {
+                tolerance = tolerance || 1;
+              }
+
+              return {
+                pass: Math.abs(expected - actual) <= tolerance
+              };
+            }
+          }
+        }
+      });
+    });
+
     it('has been defined', function(done) {
         var matchHeight = $.fn.matchHeight;
         expect(typeof matchHeight).toBe('function');
@@ -40,12 +54,12 @@ describe('matchHeight', function() {
         if (currentBreakpoint === 'mobile') {
             // all heights will be different
         } else if (currentBreakpoint === 'tablet') {
-            expect(item0Height).toBe(item1Height);
-            expect(item2Height).toBe(item3Height);
+            expect(item0Height).toBeWithinTolerance(item1Height);
+            expect(item2Height).toBeWithinTolerance(item3Height);
         } else if (currentBreakpoint === 'desktop') {
-            expect(item0Height).toBe(item3Height);
-            expect(item1Height).toBe(item3Height);
-            expect(item2Height).toBe(item3Height);
+            expect(item0Height).toBeWithinTolerance(item3Height);
+            expect(item1Height).toBeWithinTolerance(item3Height);
+            expect(item2Height).toBeWithinTolerance(item3Height);
         }
 
         done();
@@ -101,14 +115,14 @@ describe('matchHeight', function() {
                     var naturalHeight = $item.outerHeight();
                     $item.css('height', heightCss);
 
-                    expect(actualHeight).toBe(targetHeight);
+                    expect(actualHeight).toBeWithinTolerance(targetHeight);
 
                     if (naturalHeight > maxNaturalHeight) {
                         maxNaturalHeight = naturalHeight;
                     }
                 });
 
-                expect(targetHeight).toBe(maxNaturalHeight);
+                expect(targetHeight).toBeWithinTolerance(maxNaturalHeight);
             });
         });
 
@@ -139,7 +153,7 @@ describe('matchHeight', function() {
                 var naturalHeight = $item.outerHeight();
                 $item.css('height', heightCss);
 
-                expect(actualHeight).toBe(targetHeight);
+                expect(actualHeight).toBeWithinTolerance(targetHeight);
 
                 if (naturalHeight > maxNaturalHeight) {
                     maxNaturalHeight = naturalHeight;
@@ -147,7 +161,7 @@ describe('matchHeight', function() {
             });
 
             // TODO: solve this for .nested-items-parent, .nested-items
-            expect(targetHeight).toBe(maxNaturalHeight);
+            expect(targetHeight).toBeWithinTolerance(maxNaturalHeight);
         });
 
         $.each($.fn.matchHeight._groups, function() {
@@ -181,14 +195,14 @@ describe('matchHeight', function() {
                     var naturalHeight = $item.outerHeight();
                     $item.css('height', heightCss);
 
-                    expect(actualHeight).toBe(targetHeight);
+                    expect(actualHeight).toBeWithinTolerance(targetHeight);
 
                     if (naturalHeight > maxNaturalHeight) {
                         maxNaturalHeight = naturalHeight;
                     }
                 });
 
-                expect(targetHeight).toBe(maxNaturalHeight);
+                expect(targetHeight).toBeWithinTolerance(maxNaturalHeight);
             });
         });
 
@@ -206,12 +220,10 @@ describe('matchHeight', function() {
             item3Height = $items.find('.item-3').outerHeight();
 
         if (currentBreakpoint !== 'mobile') {
-            expect(item0Height).toBe(item1Height);
-            expect(item2Height).toBe(item3Height);
-            expect(item0Height).not.toBe(item2Height);
-            expect(item1Height).not.toBe(item3Height);
-        } else {
-            expect(true).toBe(true);
+            expect(item0Height).toBeWithinTolerance(item1Height);
+            expect(item2Height).toBeWithinTolerance(item3Height);
+            expect(item0Height).not.toBeWithinTolerance(item2Height);
+            expect(item1Height).not.toBeWithinTolerance(item3Height);
         }
 
         done();
@@ -224,9 +236,133 @@ describe('matchHeight', function() {
             item2Height = $items.find('.item-2').outerHeight(),
             item3Height = $items.find('.item-3').outerHeight();
 
-        expect(item0Height).toBe(item1Height);
-        expect(item2Height).toBe(item1Height);
-        expect(item3Height).toBe(item1Height);
+        expect(item0Height).toBeWithinTolerance(item1Height);
+        expect(item2Height).toBeWithinTolerance(item1Height);
+        expect(item3Height).toBeWithinTolerance(item1Height);
+
+        done();
+    });
+
+    it('can manually update heights and fires global callbacks', function(done) {
+        var currentBreakpoint = testHelper.getCurrentBreakpoint(),
+            calledBefore = false,
+            calledAfter = false;
+
+        var oldBefore = $.fn.matchHeight._beforeUpdate,
+            oldAfter = $.fn.matchHeight._afterUpdate;
+
+        // set some test update callbacks
+        $.fn.matchHeight._beforeUpdate = function() {
+            calledBefore = true;
+        };
+
+        $.fn.matchHeight._afterUpdate = function() {
+            calledAfter = true;
+        };
+
+        // add more content to one of the items to change it's height
+        $('.simple-items .item-1').append('<p>Test content update.</p>');
+
+        // call update which should match heights again
+        $.fn.matchHeight._update();
+
+        if (currentBreakpoint === 'mobile') {
+            // all heights will be different
+        } else {
+            // check item heights are as expected
+            $('.simple-items').each(function() {
+                var $items = $(this).children('.item'),
+                    rows = $.fn.matchHeight._rows($items);
+
+                $.each(rows, function(index, $row) {
+                    var targetHeight = $row.first().outerHeight(),
+                        maxNaturalHeight = 0;
+
+                    $row.each(function() {
+                        var $item = $(this),
+                            heightCss = $item.css('height'),
+                            actualHeight = $item.outerHeight();
+
+                        $item.css('height', '');
+                        var naturalHeight = $item.outerHeight();
+                        $item.css('height', heightCss);
+
+                        expect(actualHeight).toBeWithinTolerance(targetHeight);
+
+                        if (naturalHeight > maxNaturalHeight) {
+                            maxNaturalHeight = naturalHeight;
+                        }
+                    });
+
+                    expect(targetHeight).toBeWithinTolerance(maxNaturalHeight);
+                });
+            });
+        }
+
+        // check callbacks were fired
+        expect(calledBefore).toBe(true);
+        expect(calledAfter).toBe(true);
+
+        // revert callbacks
+        $.fn.matchHeight._beforeUpdate = oldBefore;
+        $.fn.matchHeight._afterUpdate = oldAfter;
+
+        done();
+    });
+
+    it('parses numbers and NaN', function(done) {
+        var _parse = $.fn.matchHeight._parse;
+        expect(_parse(1)).toBe(1);
+        expect(_parse(1.1)).toBe(1.1);
+        expect(_parse('1')).toBe(1);
+        expect(_parse('1.1')).toBe(1.1);
+        expect(_parse(NaN)).toBe(0);
+        done();
+    });
+
+    it('parses options', function(done) {
+        var _parseOptions = $.fn.matchHeight._parseOptions,
+            defaultOptions = {
+                byRow: true,
+                property: 'height',
+                target: null,
+                remove: false
+            };
+
+        expect(_parseOptions()).toEqual(defaultOptions);
+
+        expect(_parseOptions({
+            byRow: false,
+            property: 'min-height',
+            target: null,
+            remove: true
+        })).toEqual({
+            byRow: false,
+            property: 'min-height',
+            target: null,
+            remove: true
+        });
+
+        expect(_parseOptions('remove')).toEqual({
+            byRow: defaultOptions.byRow,
+            property: defaultOptions.property,
+            target: defaultOptions.target,
+            remove: true
+        });
+
+        expect(_parseOptions(true)).toEqual({
+            byRow: true,
+            property: defaultOptions.property,
+            target: defaultOptions.target,
+            remove: defaultOptions.remove
+        });
+
+        expect(_parseOptions(false)).toEqual({
+            byRow: false,
+            property: defaultOptions.property,
+            target: defaultOptions.target,
+            remove: defaultOptions.remove
+        });
 
         done();
     });

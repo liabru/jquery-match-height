@@ -18,7 +18,7 @@ var capabilities = [
     {
         browser: 'iPhone',
         device: 'iPhone 6',
-        deviceOrientation: 'landscape'
+        deviceOrientation: 'portrait'
     },
     {
         browser: 'iPad',
@@ -28,7 +28,7 @@ var capabilities = [
     {
         browser: 'android',
         device: 'Samsung Galaxy S5',
-        deviceOrientation: 'landscape'
+        deviceOrientation: 'portrait'
     },
     {
         browser: 'android',
@@ -46,7 +46,7 @@ for (var i = 0; i < capabilities.length; i += 1) {
 
     if (!capability['deviceOrientation']) {
         capability['viewports'] = capability['viewports'] || viewports;
-        capability['resolution'] = capability['resolution'] || '1680x1050';
+        capability['resolution'] = capability['resolution'] || '1600x1200';
     }
 }
 

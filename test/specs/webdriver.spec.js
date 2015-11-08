@@ -1,6 +1,15 @@
 var async = require('async');
 
 describe('matchHeight webdriver', function() {
+    var capabilities = browser.desiredCapabilities,
+        urls = capabilities.urls,
+        viewports = capabilities.viewports,
+        browserInfo = capabilities.browserName;
+
+    if (capabilities.browser) {
+        browserInfo = capabilities.browser + ' ' + capabilities.browser_version;
+    }
+
     var runAllTests = function(pageUrls, width, height, done) {
         var next = browser;
 
@@ -22,7 +31,7 @@ describe('matchHeight webdriver', function() {
                     };
                 })
                 .then(function(ret) {
-                    var message = ret.value.failed.join(', ') + ' failed on ' + pageUrl;
+                    var message = ret.value.failed.join(', ') + ' failed on ' + browserInfo + ' on ' + pageUrl;
                     expect(ret.value.passed.length).toBe(ret.value.total.length, message);
 
                     if (browser.options.pauseOnFail && ret.value.passed.length !== ret.value.total.length) {
@@ -34,9 +43,6 @@ describe('matchHeight webdriver', function() {
                 .then(callback);
         }, done);
     };
-
-    var urls = browser.desiredCapabilities.urls,
-        viewports = browser.desiredCapabilities.viewports;
 
     if (viewports) {
         for (var i = 0; i < viewports.length; i += 1) {

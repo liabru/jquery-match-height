@@ -137,6 +137,8 @@
     matchHeight._beforeUpdate = null;
     matchHeight._afterUpdate = null;
     matchHeight._rows = _rows;
+    matchHeight._parse = _parse;
+    matchHeight._parseOptions = _parseOptions;
 
     /*
     *  matchHeight._apply
