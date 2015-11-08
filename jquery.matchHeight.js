@@ -4,7 +4,7 @@
 * License: MIT
 */
 
-;(function($) {
+;(function($) { // eslint-disable-line no-extra-semi
     /*
     *  internal
     */
