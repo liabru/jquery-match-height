@@ -10,6 +10,7 @@ var gulpBump = require('gulp-bump');
 var changelog = require('gulp-conventional-changelog');
 var tag = require('gulp-tag-version');
 var sequence = require('run-sequence');
+var replace = require('gulp-replace');
 var webdriver = require('gulp-webdriver');
 var webserver = require('gulp-webserver');
 var selenium = require('selenium-standalone');
@@ -26,6 +27,7 @@ gulp.task('release', function(callback) {
 
 gulp.task('build', function() {
     return gulp.src(pkg.main)
+        .pipe(replace("version = 'master'", "version = '" + pkg.version + "'"))
         .pipe(uglify())
         .pipe(header(banner, { pkg: pkg }))
         .pipe(rename({ suffix: '-min' }))

@@ -131,6 +131,7 @@
     *  plugin global options
     */
 
+    matchHeight.version = 'master';
     matchHeight._groups = [];
     matchHeight._throttle = 80;
     matchHeight._maintainScroll = false;
