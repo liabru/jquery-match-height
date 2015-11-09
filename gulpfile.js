@@ -71,6 +71,12 @@ gulp.task('changelog', function () {
 });
 
 gulp.task('serve', function() {
+    process.on('uncaughtException', function(err) {
+        if (err.errno === 'EADDRINUSE') {
+            console.log('Server already running (or port is otherwise in use)');
+        }
+    });     
+
     server = gulp.src('.')
         .pipe(webserver({
             host: '0.0.0.0',
