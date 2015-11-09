@@ -111,7 +111,7 @@ gulp.task('selenium', function(done) {
     });
 });
 
-gulp.task('test', ['serve', 'selenium'], function(done) {
+gulp.task('test', ['lint', 'serve', 'selenium'], function(done) {
     var error;
     console.log('Starting webdriver...');
 
@@ -134,7 +134,7 @@ gulp.task('test', ['serve', 'selenium'], function(done) {
         .on('finish', finish);
 });
 
-gulp.task('test:cloud', ['serve'], function(done) {
+gulp.task('test:cloud', ['lint', 'serve'], function(done) {
     gulp.src('test/conf/cloud.conf.js')
     .pipe(browserStack.startTunnel({
         key: privateConfig.key,
@@ -157,7 +157,7 @@ gulp.task('test:cloud', ['serve'], function(done) {
     });
 });
 
-gulp.task('test:cloud:all', function(done) {
+gulp.task('test:cloud:all', ['lint', 'serve'], function(done) {
     return gulp
     .src('test/conf/cloud-all.conf.js')
     .pipe(browserStack.startTunnel({
