@@ -15,7 +15,7 @@ var replace = require('gulp-replace');
 var webdriver = require('gulp-webdriver');
 var webserver = require('gulp-webserver');
 var selenium = require('selenium-standalone');
-var browserStack = require('gulp-browserstack');
+var ngrok = require('ngrok');
 var staticTransform = require('connect-static-transform');
 var privateConfig = require('./test/conf/private.conf.js').config;
 var pkg = require('./package.json');
@@ -129,48 +129,63 @@ gulp.task('test', ['lint', 'serve', 'selenium'], function(done) {
         done(error || err);
     };
 
+
     gulp.src('test/conf/local.conf.js')
-        .pipe(webdriver())
+        .pipe(webdriver({
+            baseUrl: 'http://localhost:8000'
+        }))
         .on('error', function(err) { error = err; })
         .on('finish', finish);
 });
 
 gulp.task('test:cloud', ['lint', 'serve'], function(done) {
-    gulp.src('test/conf/cloud.conf.js')
-    .pipe(browserStack.startTunnel({
-        key: privateConfig.key,
-        hosts: [{
-            name: 'localhost',
-            port: 8000,
-            sslFlag: 0
-        }]
-    }))
-    .pipe(webdriver())
-    .pipe(browserStack.stopTunnel())
-    .on('finish', function(err) {
-        if (server) {
-            try {
-                server.emit('kill');
-            } catch(e) {}
-            console.log('Web server stopped');
-        }
-        done(err);
+    ngrok.connect({
+        authtoken: null,
+        port: 8000
+    }, function (err, url) {
+        gutil.log('Tunnel started', url);
+        gulp.src('test/conf/cloud.conf.js')
+        .pipe(webdriver({
+            baseUrl: url
+        }))
+        .on('finish', function(err) {
+            if (server) {
+                try {
+                    server.emit('kill');
+                } catch(e) {}
+                ngrok.disconnect();
+                ngrok.kill();
+                gutil.log('Tunnel stopped');
+                gutil.log('Web server stopped');
+            }
+            done(err);
+        });
     });
 });
 
 gulp.task('test:cloud:all', ['lint', 'serve'], function(done) {
-    return gulp
-    .src('test/conf/cloud-all.conf.js')
-    .pipe(browserStack.startTunnel({
-        key: privateConfig.key,
-        hosts: [{
-            name: 'localhost',
-            port: 8000,
-            sslFlag: 0
-        }]
-    }))
-    .pipe(webdriver())
-    .pipe(browserStack.stopTunnel());
+    ngrok.connect({
+        authtoken: null,
+        port: 8000
+    }, function (err, url) {
+        gutil.log('Tunnel started', url);
+        gulp.src('test/conf/cloud-all.conf.js')
+        .pipe(webdriver({
+            baseUrl: url
+        }))
+        .on('finish', function(err) {
+            if (server) {
+                try {
+                    server.emit('kill');
+                } catch(e) {}
+                ngrok.disconnect();
+                ngrok.kill();
+                gutil.log('Tunnel stopped');
+                gutil.log('Web server stopped');
+            }
+            done(err);
+        });
+    });
 });
 
 var banner = [

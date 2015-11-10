@@ -1,6 +1,6 @@
 var privateConfig = require('./private.conf.js').config;
 
-var testUrl = 'http://localhost:8000/test/page/test.html',
+var testUrl = '/test/page/test.html',
     viewports = [[1280, 1024], [640, 480], [320, 640]];
 
 var capabilities = [
@@ -145,9 +145,7 @@ var capabilities = [
 
 for (var i = 0; i < capabilities.length; i += 1) {
     var capability = capabilities[i];
-    capability['browserstack.local'] = true;
     capability['browserstack.debug'] = true;
-    capability['initialBrowserUrl'] = testUrl;
     capability['urls'] = capability['urls'] || [testUrl];
 
     if (!capability['deviceOrientation']) {

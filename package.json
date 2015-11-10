@@ -38,6 +38,7 @@
     "gulp-webdriver": "^1.0.1",
     "gulp-webserver": "^0.9.1",
     "jasmine": "^2.3.2",
+    "ngrok": "^0.1.99",
     "run-sequence": "^1.1.4",
     "selenium-standalone": "^4.7.0",
     "webdriverio": "^3.2.5"
