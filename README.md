@@ -165,6 +165,23 @@ If you are observing this behaviour, use the above line to automatically attempt
 
 The array that contains all element groups that have had `matchHeight` applied. Used internally for automatically updating on resize events, but you may modify this array if you need to manually access any groups (e.g. if you're deleting elements).
 
+### Tests
+
+Open `test/page/test.html` in your browser to run [unit tests](https://github.com/liabru/jquery-match-height/blob/master/test/specs/matchHeight.spec.js) via the [jasmine](https://github.com/jasmine/jasmine) test runner.
+
+If you wish to contribute functionality to this project, you are encouraged to add new tests following the same conventions.
+
+Run `gulp test` to run unit tests on [multiple browsers](https://github.com/liabru/jquery-match-height/blob/master/test/conf/local.conf.js) and multiple resolutions, automatically through [selenium](http://www.seleniumhq.org/).
+
+Run `gulp test:cloud` to test on [even more browsers](https://github.com/liabru/jquery-match-height/blob/master/test/conf/cloud.conf.js) via a cloud service (you will need to create a file called `test/conf/private.conf.js` with your [cloud credentials](http://webdriver.io/guide/testrunner/cloudservices.html) that looks like this:
+
+    exports.config = {
+        user: 'username',
+        key: 'key'
+    };
+
+Cloud browser testing for this project is provided by [BrowserStack](https://www.browserstack.com/) (which is [free for open source](https://www.browserstack.com/pricing)).
+
 ### Known limitations
 
 #### CSS transitions and animations are not supported
