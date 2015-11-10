@@ -19,6 +19,7 @@ var ngrok = require('ngrok');
 var staticTransform = require('connect-static-transform');
 var privateConfig = require('./test/conf/private.conf.js').config;
 var pkg = require('./package.json');
+var extend = require('util')._extend;
 var server;
 
 gulp.task('release', function(callback) {
@@ -27,10 +28,12 @@ gulp.task('release', function(callback) {
 });
 
 gulp.task('build', function() {
+    build = extend(pkg)
+    build.version = process.argv[4] || pkg.version;
     return gulp.src(pkg.main)
-        .pipe(replace("version = 'master'", "version = '" + pkg.version + "'"))
-        .pipe(uglify())
-        .pipe(header(banner, { pkg: pkg }))
+        .pipe(replace("version = 'master'", "version = '" + build.version + "'"))
+        .pipe(uglify({ output: { max_line_len: 500 } }))
+        .pipe(header(banner, { build: build }))
         .pipe(rename({ suffix: '-min' }))
         .pipe(gulp.dest('.'));
 });
@@ -190,9 +193,9 @@ gulp.task('test:cloud:all', ['lint', 'serve'], function(done) {
 
 var banner = [
   '/*',
-  '* <%= pkg.name %> v<%= pkg.version %> by @liabru',
-  '* <%= pkg.homepage %>',
-  '* License <%= pkg.license %>',
+  '* <%= build.name %> <%= build.version %> by @liabru',
+  '* <%= build.homepage %>',
+  '* License <%= build.license %>',
   '*/',
   ''
 ].join('\n');
