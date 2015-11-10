@@ -176,7 +176,7 @@
                     display = $that.css('display');
 
                 // temporarily force a usable display value
-                if (display !== 'inline-block' && display !== 'inline-flex') {
+                if (display !== 'inline-block' && display !== 'flex' && display !== 'inline-flex') {
                     display = 'block';
                 }
 
@@ -223,7 +223,7 @@
                         display = $that.css('display');
 
                     // temporarily force a usable display value
-                    if (display !== 'inline-block' && display !== 'inline-flex') {
+                    if (display !== 'inline-block' && display !== 'flex' && display !== 'inline-flex') {
                         display = 'block';
                     }
 
