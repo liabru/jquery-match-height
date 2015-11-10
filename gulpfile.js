@@ -10,6 +10,7 @@ var gulpBump = require('gulp-bump');
 var changelog = require('gulp-conventional-changelog');
 var tag = require('gulp-tag-version');
 var sequence = require('run-sequence');
+var gutil = require('gulp-util');
 var replace = require('gulp-replace');
 var webdriver = require('gulp-webdriver');
 var webserver = require('gulp-webserver');
@@ -73,7 +74,7 @@ gulp.task('changelog', function () {
 gulp.task('serve', function() {
     process.on('uncaughtException', function(err) {
         if (err.errno === 'EADDRINUSE') {
-            console.log('Server already running (or port is otherwise in use)');
+            gutil.log('Server already running (or port is otherwise in use)');
         }
     });     
 
@@ -94,17 +95,17 @@ gulp.task('serve', function() {
 });
 
 gulp.task('selenium', function(done) {
-    console.log('Setting up Selenium server...');
+    gutil.log('Setting up Selenium server...');
     selenium.install({
-        logger: function(message) { console.log(message); }
+        logger: function(message) { gutil.log(message); }
     }, function(err) {
         if (err) {
             done(err);
             return;
         }
-        console.log('Starting Selenium server...');
+        gutil.log('Starting Selenium server...');
         selenium.start(function(err, child) {
-            console.log('Selenium server started');
+            gutil.log('Selenium server started');
             selenium.child = child;
             done(err);
         });
@@ -113,17 +114,17 @@ gulp.task('selenium', function(done) {
 
 gulp.task('test', ['lint', 'serve', 'selenium'], function(done) {
     var error;
-    console.log('Starting webdriver...');
+    gutil.log('Starting webdriver...');
 
     var finish = function(err) {
-        console.log('Webdriver stopped');
+        gutil.log('Webdriver stopped');
         selenium.child.kill();
-        console.log('Selenium server stopped');
+        gutil.log('Selenium server stopped');
         if (server) {
             try {
                 server.emit('kill');
             } catch(e) {}
-            console.log('Web server stopped');
+            gutil.log('Web server stopped');
         }
         done(error || err);
     };
