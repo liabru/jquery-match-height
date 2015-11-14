@@ -2,7 +2,6 @@
 // manual testing before going into production is still advised!
 // the following features are implemented, but do not have specs yet:
 
-// TODO: spec for $(elements).matchHeight({ property: 'min-height' })
 // TODO: spec for $(elements).matchHeight({ remove: true })
 // TODO: spec for events: ready, load, resize, orientationchange
 // TODO: spec for $.fn.matchHeight._groups
@@ -248,6 +247,27 @@ describe('matchHeight', function() {
         expect(item0Height).toBeWithinTolerance(item1Height);
         expect(item2Height).toBeWithinTolerance(item1Height);
         expect(item3Height).toBeWithinTolerance(item1Height);
+
+        done();
+    });
+
+    it('has applied the property option', function(done) {
+        var $items = $('.property-items'),
+            currentBreakpoint = testHelper.getCurrentBreakpoint(),
+            _parse = $.fn.matchHeight._parse,
+            item0Value = _parse($items.find('.item-0').css('min-height')),
+            item1Value = _parse($items.find('.item-1').css('min-height')),
+            item2Value = _parse($items.find('.item-2').css('min-height')),
+            item3Value = _parse($items.find('.item-3').css('min-height'));
+
+        if (currentBreakpoint === 'tablet') {
+            expect(item0Value).toBeWithinTolerance(item1Value);
+            expect(item3Value).toBeWithinTolerance(item2Value);
+        } else if (currentBreakpoint === 'desktop') {
+            expect(item0Value).toBeWithinTolerance(item1Value);
+            expect(item2Value).toBeWithinTolerance(item1Value);
+            expect(item3Value).toBeWithinTolerance(item1Value);
+        }
 
         done();
     });

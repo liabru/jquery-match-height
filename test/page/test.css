@@ -101,7 +101,8 @@ a.test-summary.has-failed {
 
 .items-container,
 .data-api-items,
-.target-items {
+.target-items,
+.property-items {
     overflow: hidden;
     margin: 0 -1%;
 }
