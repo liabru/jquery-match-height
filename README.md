@@ -103,13 +103,17 @@ The above will set all elements with the class `item` to the height of the first
 The above will set both elements in `my-group` to the same height as each other.
 It will set both elements in `my-other-group` to be the same height as each other.
 
+	$('.item').matchHeight('remove');
+
+The above will remove any matchHeight bindings for a given set of elements.
+
 See the included [test.html](https://github.com/liabru/jquery-match-height/blob/master/test.html) for a working example.
 
 ### Data API
 
 Use the data attribute `data-mh="group-name"` where `group-name` is an arbitrary string to identify which elements should be considered as a group.
 
-All elements with the same group name will be set to the same height when the page is loaded, regardless of their position in the DOM, without any extra code required. 
+All elements with the same group name will be set to the same height when the page is loaded, regardless of their position in the DOM, without any extra code required.
 
 Note that `byRow` will be enabled when using the data API, if you don't want this (or require other options) then use the alternative method above.
 
