@@ -18,8 +18,10 @@
         ]
     },
     "env": {
+        "node": true,
         "browser": true,
-        "jquery": true
+        "jquery": true,
+        "amd": true
     },
     "extends": "eslint:recommended"
 }

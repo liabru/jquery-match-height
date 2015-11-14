@@ -4,7 +4,7 @@
 * License: MIT
 */
 
-;(function(factory) {
+;(function(factory) { // eslint-disable-line no-extra-semi
     'use strict';
     if (typeof define === 'function' && define.amd) {
         // AMD
@@ -16,7 +16,7 @@
         // Global
         factory(jQuery);
     }
-})(function($) { // eslint-disable-line no-extra-semi
+})(function($) {
     /*
     *  internal
     */
