@@ -31,14 +31,18 @@ describe('matchHeight', function() {
 
     it('has been defined', function(done) {
         var matchHeight = $.fn.matchHeight;
-        expect(typeof matchHeight).toBe('function');
-        expect(testHelper.isArray(matchHeight._groups)).toBe(true);
-        expect(typeof matchHeight._throttle).toBe('number');
+        expect($.isFunction(matchHeight)).toBe(true);
+        expect($.isArray(matchHeight._groups)).toBe(true);
+        expect($.isNumeric(matchHeight._throttle)).toBe(true);
         expect(typeof matchHeight._maintainScroll).toBe('boolean');
-        expect(typeof matchHeight._rows).toBe('function');
-        expect(typeof matchHeight._apply).toBe('function');
-        expect(typeof matchHeight._applyDataApi).toBe('function');
-        expect(typeof matchHeight._update).toBe('function');
+        expect($.isFunction(matchHeight._rows)).toBe(true);
+        expect($.isFunction(matchHeight._apply)).toBe(true);
+        expect($.isFunction(matchHeight._applyDataApi)).toBe(true);
+        expect($.isFunction(matchHeight._update)).toBe(true);
+        expect($.isFunction(matchHeight._parse)).toBe(true);
+        expect($.isFunction(matchHeight._parseOptions)).toBe(true);
+        expect($.isFunction(matchHeight._getProperty)).toBe(true);
+        expect($.isFunction(matchHeight._setProperty)).toBe(true);
         done();
     });
 
@@ -415,9 +419,6 @@ jasmine.getEnv().addReporter({
 
 var testHelper = {
     isMediaQueriesSupported: typeof (window.matchMedia || window.msMatchMedia) !== 'undefined' || navigator.userAgent.indexOf('MSIE 9.0') >= 0,
-    isArray: function(obj) {
-        return Object.prototype.toString.call(obj) === '[object Array]';
-    },
     getCurrentBreakpoint: function() {
         if (testHelper.isMediaQueriesSupported) {
             var windowWidth = $(window).width();
