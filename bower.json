@@ -6,7 +6,7 @@
         "Liam Brummitt <liam@brm.io> (http://brm.io/)"
     ],
     "description": "a more robust, responsive equal heights plugin for jQuery",
-    "main": "jquery.matchHeight-min.js",
+    "main": "jquery.matchHeight.js",
     "keywords": [
         "matchHeight",
         "equal",
