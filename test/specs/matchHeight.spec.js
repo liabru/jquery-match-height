@@ -273,21 +273,11 @@ describe('matchHeight', function() {
     });
 
     it('can manually update heights and fires global callbacks', function(done) {
-        var currentBreakpoint = testHelper.getCurrentBreakpoint(),
-            calledBefore = false,
-            calledAfter = false;
+        var currentBreakpoint = testHelper.getCurrentBreakpoint();
 
-        var oldBefore = $.fn.matchHeight._beforeUpdate,
-            oldAfter = $.fn.matchHeight._afterUpdate;
-
-        // set some test update callbacks
-        $.fn.matchHeight._beforeUpdate = function() {
-            calledBefore = true;
-        };
-
-        $.fn.matchHeight._afterUpdate = function() {
-            calledAfter = true;
-        };
+        // spy on global callbacks
+        spyOn($.fn.matchHeight, '_beforeUpdate');
+        spyOn($.fn.matchHeight, '_afterUpdate');
 
         // add more content to one of the items to change it's height
         $('.simple-items .item-1').append('<p>Test content update.</p>');
@@ -329,12 +319,15 @@ describe('matchHeight', function() {
         }
 
         // check callbacks were fired
-        expect(calledBefore).toBe(true);
-        expect(calledAfter).toBe(true);
+        expect($.fn.matchHeight._beforeUpdate).toHaveBeenCalled();
+        expect($.fn.matchHeight._afterUpdate).toHaveBeenCalled();
 
-        // revert callbacks
-        $.fn.matchHeight._beforeUpdate = oldBefore;
-        $.fn.matchHeight._afterUpdate = oldAfter;
+        var beforeUpdateArgs = $.fn.matchHeight._beforeUpdate.calls.argsFor(0),
+            afterUpdateArgs = $.fn.matchHeight._afterUpdate.calls.argsFor(0);
+
+        // group arg
+        expect($.isArray(beforeUpdateArgs[1])).toBe(true);
+        expect($.isArray(afterUpdateArgs[1])).toBe(true);
 
         done();
     });
