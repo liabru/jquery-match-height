@@ -342,6 +342,8 @@ describe('matchHeight', function() {
         expect(_parse(1.1)).toBe(1.1);
         expect(_parse('1')).toBe(1);
         expect(_parse('1.1')).toBe(1.1);
+        expect(_parse('1px')).toBe(1);
+        expect(_parse('1.1px')).toBe(1.1);
         expect(_parse(NaN)).toBe(0);
         done();
     });
