@@ -42,5 +42,9 @@
     "run-sequence": "^1.1.4",
     "selenium-standalone": "^4.7.0",
     "webdriverio": "^3.2.5"
+  },
+  "dependencies": {
+    "connect-static-transform": "^0.8.0",
+    "gulp-conventional-changelog": "^0.7.0"
   }
 }
