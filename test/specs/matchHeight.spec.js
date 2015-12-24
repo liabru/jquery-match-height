@@ -41,8 +41,6 @@ describe('matchHeight', function() {
         expect($.isFunction(matchHeight._update)).toBe(true);
         expect($.isFunction(matchHeight._parse)).toBe(true);
         expect($.isFunction(matchHeight._parseOptions)).toBe(true);
-        expect($.isFunction(matchHeight._getProperty)).toBe(true);
-        expect($.isFunction(matchHeight._setProperty)).toBe(true);
         done();
     });
 

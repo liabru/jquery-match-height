@@ -25,9 +25,12 @@
     "test": "gulp test"
   },
   "devDependencies": {
+    "async": "^1.5.0",
+    "connect-static-transform": "^0.8.0",
     "gulp": "^3.9.0",
     "gulp-browserstack": "^1.0.0",
     "gulp-bump": "^1.0.0",
+    "gulp-conventional-changelog": "^0.7.0",
     "gulp-eslint": "^1.0.0",
     "gulp-header": "^1.7.1",
     "gulp-rename": "^1.2.2",
