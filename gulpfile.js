@@ -74,26 +74,20 @@ gulp.task('changelog', function () {
 });
 
 gulp.task('serve', function() {
-    process.on('uncaughtException', function(err) {
-        if (err.errno === 'EADDRINUSE') {
-            gutil.log('Server already running (or port is otherwise in use)');
-        }
-    });     
+    serve(false);
+});
 
-    server = gulp.src('.')
-        .pipe(webserver({
-            host: '0.0.0.0',
-            //livereload: true,
-            directoryListing: true,
-            middleware: function(req, res, next) {
-                var ieMode = (req._parsedUrl.query || '').replace('=','');
-                if (ieMode in emulateIEMiddleware) {
-                    emulateIEMiddleware[ieMode](req, res, next);
-                } else {
-                    next();
-                }
-            }
-        }));
+gulp.task('serve:test', function() {
+    serve(true);
+});
+
+gulp.task('serve:stop', function() {
+    if (server) {
+        try {
+            server.emit('kill');
+        } catch (e) {} // eslint-disable-line no-empty
+        gutil.log('Web server stopped');
+    }
 });
 
 gulp.task('selenium', function(done) {
@@ -114,7 +108,7 @@ gulp.task('selenium', function(done) {
     });
 });
 
-gulp.task('test', ['lint', 'serve', 'selenium'], function(done) {
+gulp.task('test', ['lint', 'serve:test', 'selenium'], function(done) {
     var error;
     gutil.log('Starting webdriver...');
 
@@ -122,12 +116,7 @@ gulp.task('test', ['lint', 'serve', 'selenium'], function(done) {
         gutil.log('Webdriver stopped');
         selenium.child.kill();
         gutil.log('Selenium server stopped');
-        if (server) {
-            try {
-                server.emit('kill');
-            } catch(e) {}
-            gutil.log('Web server stopped');
-        }
+        gulp.start('serve:stop');
         done(error || err);
     };
 
@@ -140,7 +129,7 @@ gulp.task('test', ['lint', 'serve', 'selenium'], function(done) {
         .on('finish', finish);
 });
 
-gulp.task('test:cloud', ['lint', 'serve'], function(done) {
+gulp.task('test:cloud', ['lint', 'serve:test'], function(done) {
     ngrok.connect({
         authtoken: null,
         port: 8000
@@ -152,20 +141,17 @@ gulp.task('test:cloud', ['lint', 'serve'], function(done) {
         }))
         .on('finish', function(err) {
             if (server) {
-                try {
-                    server.emit('kill');
-                } catch(e) {}
                 ngrok.disconnect();
                 ngrok.kill();
                 gutil.log('Tunnel stopped');
-                gutil.log('Web server stopped');
+                gulp.start('serve:stop');
             }
             done(err);
         });
     });
 });
 
-gulp.task('test:cloud:all', ['lint', 'serve'], function(done) {
+gulp.task('test:cloud:all', ['lint', 'serve:test'], function(done) {
     ngrok.connect({
         authtoken: null,
         port: 8000
@@ -177,18 +163,39 @@ gulp.task('test:cloud:all', ['lint', 'serve'], function(done) {
         }))
         .on('finish', function(err) {
             if (server) {
-                try {
-                    server.emit('kill');
-                } catch(e) {}
                 ngrok.disconnect();
                 ngrok.kill();
                 gutil.log('Tunnel stopped');
-                gutil.log('Web server stopped');
+                gulp.start('serve:stop');
             }
             done(err);
         });
     });
 });
+
+var serve = function(isTest) {
+    process.on('uncaughtException', function(err) {
+        if (err.errno === 'EADDRINUSE') {
+            gutil.log('Server already running (or port is otherwise in use)');
+        }
+    });
+
+    server = gulp.src('.')
+        .pipe(webserver({
+            host: '0.0.0.0',
+            livereload: !isTest,
+            middleware: function(req, res, next) {
+                var ieMode = (req._parsedUrl.query || '').replace('=','');
+                if (ieMode in emulateIEMiddleware) {
+                    emulateIEMiddleware[ieMode](req, res, next);
+                } else {
+                    next();
+                }
+            },
+            open: isTest ? false : 'http://localhost:8000/test/page/test.html',
+            directoryListing: true
+        }));
+};
 
 var banner = [
   '/*',
