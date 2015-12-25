@@ -232,6 +232,7 @@
                 // iterate the row and find the max height
                 $row.each(function(){
                     var $that = $(this),
+                        style = $that.attr('style'),
                         display = $that.css('display');
 
                     // temporarily force a usable display value
@@ -249,8 +250,12 @@
                         targetHeight = $that.outerHeight(false);
                     }
 
-                    // revert display block
-                    $that.css('display', '');
+                    // revert styles
+                    if (style) {
+                        $that.attr('style', style);
+                    } else {
+                        $that.css('display', '');
+                    }
                 });
             } else {
                 // if target set, use the height of the target element

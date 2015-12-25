@@ -107,7 +107,7 @@ describe('matchHeight', function() {
         expect(1.0001).not.toBeWithinTolerance(0);
 
         $('.simple-items, .image-items, .nested-items-parent, .nested-items,' +
-          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float')
+          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float, .inline-style-items')
         .each(function() {
             var $items = $(this).children('.item'),
                 rows = $.fn.matchHeight._rows($items);
@@ -148,7 +148,7 @@ describe('matchHeight', function() {
         $.fn.matchHeight._update();
 
         $('.simple-items, .image-items,' +
-          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float')
+          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float, .inline-style-items')
         .each(function() {
             var $items = $(this).children('.item'),
                 targetHeight = $items.first().outerHeight(),
@@ -389,6 +389,21 @@ describe('matchHeight', function() {
             target: defaultOptions.target,
             remove: defaultOptions.remove
         });
+
+        done();
+    });
+
+    it('maintains inline styles', function(done) {
+        var $items = $('.inline-style-items'),
+            item0Value = $items.find('.item-0')[0].style.display,
+            item1Value = $items.find('.item-1')[0].style.position,
+            item2Value = $items.find('.item-2')[0].style.minHeight,
+            item3Value = $items.find('.item-3')[0].style.padding;
+
+        expect(item0Value).toBe('inline-block');
+        expect(item1Value).toBe('relative');
+        expect(item2Value).toBe('10px');
+        expect(item3Value).toBe('15px');
 
         done();
     });
