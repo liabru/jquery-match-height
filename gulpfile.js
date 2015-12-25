@@ -17,7 +17,6 @@ var webserver = require('gulp-webserver');
 var selenium = require('selenium-standalone');
 var ngrok = require('ngrok');
 var staticTransform = require('connect-static-transform');
-var privateConfig = require('./test/conf/private.conf.js').config;
 var pkg = require('./package.json');
 var extend = require('util')._extend;
 var server;
@@ -28,7 +27,7 @@ gulp.task('release', function(callback) {
 });
 
 gulp.task('build', function() {
-    build = extend(pkg)
+    var build = extend(pkg);
     build.version = process.argv[4] || pkg.version;
     return gulp.src(pkg.main)
         .pipe(replace("version = 'master'", "version = '" + build.version + "'"))
