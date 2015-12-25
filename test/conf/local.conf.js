@@ -1,4 +1,5 @@
 var testUrl = '/test/page/test.html',
+    hasIE = /^win/.test(process.platform),
     viewports = [[1280, 1024], [640, 480], [320, 640]];
 
 var capabilities = [
@@ -7,17 +8,22 @@ var capabilities = [
     },
     {
         browserName: 'firefox'
-    },
-    {
-        browserName: 'internet explorer',
-        urls: [testUrl, testUrl + '?ie=9', testUrl + '?ie=10'],
-    },
-    {
-        browserName: 'internet explorer',
-        urls: [testUrl + '?ie=8'],
-        viewports: [[1280, 1024]]
     }
 ];
+
+if (hasIE) {
+    capabilities = capabilities.concat([
+        {
+            browserName: 'internet explorer',
+            urls: [testUrl, testUrl + '?ie=9', testUrl + '?ie=10']
+        },
+        {
+            browserName: 'internet explorer',
+            urls: [testUrl + '?ie=8'],
+            viewports: [[1280, 1024]]
+        }
+    ]);
+}
 
 for (var i = 0; i < capabilities.length; i += 1) {
     var capability = capabilities[i];
