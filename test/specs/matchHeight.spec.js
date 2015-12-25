@@ -107,7 +107,7 @@ describe('matchHeight', function() {
         expect(1.0001).not.toBeWithinTolerance(0);
 
         $('.simple-items, .image-items, .nested-items-parent, .nested-items,' +
-          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float, .inline-style-items')
+          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float, .inline-style-items, .remove-items')
         .each(function() {
             var $items = $(this).children('.item'),
                 rows = $.fn.matchHeight._rows($items);
@@ -148,7 +148,7 @@ describe('matchHeight', function() {
         $.fn.matchHeight._update();
 
         $('.simple-items, .image-items,' +
-          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float, .inline-style-items')
+          '.fixed-items, .inline-block-items, .inline-flex-items, .items-with-float, .inline-style-items, .remove-items')
         .each(function() {
             var $items = $(this).children('.item'),
                 targetHeight = $items.first().outerHeight(),
@@ -405,6 +405,26 @@ describe('matchHeight', function() {
         expect(item2Value).toBe('10px');
         expect(item3Value).toBe('15px');
 
+        done();
+    });
+
+    it('can be removed', function(done) {
+        var matchHeight = $.fn.matchHeight,
+            $item = $('.remove-items').find('.item-0'),
+            isInAnyGroup = false;
+
+        $item.matchHeight({ remove: true });
+        expect($item[0].style.height).toBeFalsy();
+
+        for (var i = 0; i < matchHeight._groups.length; i += 1) {
+            var group = matchHeight._groups[i];
+            if ($.inArray($item[0], group.elements) !== -1) {
+                isInAnyGroup = true;
+                break;
+            }
+        }
+
+        expect(isInAnyGroup).toBeFalsy();
         done();
     });
 });
