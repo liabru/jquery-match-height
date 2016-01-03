@@ -118,7 +118,10 @@
                 group.elements = group.elements.not(that);
             });
 
-            // TODO: cleanup empty groups
+            // cleanup empty groups
+            matchHeight._groups = $.grep(matchHeight._groups, function(group) { 
+                return group.elements.length; 
+            });
 
             return this;
         }
