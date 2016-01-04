@@ -20,6 +20,7 @@ var ngrok = require('ngrok');
 var staticTransform = require('connect-static-transform');
 var pkg = require('./package.json');
 var extend = require('util')._extend;
+var fs = require('fs');
 var server;
 
 gulp.task('release', function(callback) {
@@ -112,42 +113,51 @@ gulp.task('serve:stop', function() {
 });
 
 gulp.task('selenium', function(done) {
-    gutil.log('Setting up Selenium server...');
-    selenium.install({
-        logger: function(message) { gutil.log(message); }
-    }, function(err) {
-        if (err) {
-            done(err);
-            return;
-        }
+    var start = function(err) {
         gutil.log('Starting Selenium server...');
         selenium.start(function(err, child) {
             gutil.log('Selenium server started');
             selenium.child = child;
             done(err);
         });
-    });
-});
-
-gulp.task('test', ['lint', 'serve:test', 'selenium'], function(done) {
-    var error;
-    gutil.log('Starting webdriver...');
-
-    var finish = function(err) {
-        gutil.log('Webdriver stopped');
-        selenium.child.kill();
-        gutil.log('Selenium server stopped');
-        gulp.start('serve:stop');
-        done(error || err);
     };
 
+    try {
+        fs.statSync('node_modules/selenium-standalone/.selenium');
+        start();
+    } catch (e) {
+        gutil.log('Setting up Selenium server...');
+        selenium.install({
+            logger: function(message) { gutil.log(message); }
+        }, function(err) {
+            start(err);
+        });
+    }
+});
 
-    gulp.src('test/conf/local.conf.js')
-        .pipe(webdriver({
-            baseUrl: 'http://localhost:8000'
-        }))
-        .on('error', function(err) { error = err; })
-        .on('finish', finish);
+gulp.task('test', function(done) {
+    sequence('lint', 'serve:test', 'selenium', function() {
+        var error;
+        gutil.log('Starting webdriver...');
+
+        var finish = function(err) {
+            gutil.log('Webdriver stopped');
+            selenium.child.kill();
+            gutil.log('Selenium server stopped');
+            gulp.start('serve:stop');
+            done(error || err);
+        };
+
+        gulp.src('test/conf/local.conf.js')
+            .pipe(webdriver({
+                baseUrl: 'http://localhost:8000'
+            }))
+            .on('error', function(err) { 
+                console.error(err);
+                error = err; 
+            })
+            .on('finish', finish);
+    });
 });
 
 gulp.task('test:cloud', ['lint', 'serve:test'], function(done) {
