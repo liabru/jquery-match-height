@@ -9,6 +9,7 @@ var eslint = require('gulp-eslint');
 var gulpBump = require('gulp-bump');
 var changelog = require('gulp-conventional-changelog');
 var tag = require('gulp-tag-version');
+var release = require('gulp-github-release');
 var sequence = require('run-sequence');
 var gutil = require('gulp-util');
 var replace = require('gulp-replace');
@@ -24,6 +25,26 @@ var server;
 gulp.task('release', function(callback) {
     var type = process.argv[4] || 'minor';
     sequence('lint', 'test', 'build', 'bump:' + type, 'changelog', 'tag', callback);
+});
+
+gulp.task('release:push', function(callback) {
+    sequence('release:push:git', 'release:push:github', 'release:push:npm', callback);
+});
+
+gulp.task('release:push:github', function(callback) {
+    return gulp.src(['CHANGELOG.md', 'jquery.matchHeight-min.js', 'jquery.matchHeight.js'])
+        .pipe(release({
+          tag: pkg.version,
+          name: 'jquery.matchHeight.js ' + pkg.version
+        }));
+});
+
+gulp.task('release:push:git', function(callback) {
+    shell('git push', callback);
+});
+
+gulp.task('release:push:npm', function(callback) {
+    shell('npm publish', callback);
 });
 
 gulp.task('build', function() {
@@ -220,4 +241,19 @@ var emulateIEMiddleware = {
     'ie8': emulateIEMiddlewareFactory(8),
     'ie9': emulateIEMiddlewareFactory(9),
     'ie10': emulateIEMiddlewareFactory(10)
+};
+
+var shell = function(command, callback) {
+    var args = process.argv.slice(3).join(' '),
+        proc = exec(command + ' ' + args, function(err) {
+            callback(err);
+        });
+
+    proc.stdout.on('data', function(data) {
+        process.stdout.write(data);
+    });
+
+    proc.stderr.on('data', function(data) {
+        process.stderr.write(data);
+    });
 };
