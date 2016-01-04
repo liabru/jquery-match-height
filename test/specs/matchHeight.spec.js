@@ -427,6 +427,21 @@ describe('matchHeight', function() {
         expect(isInAnyGroup).toBeFalsy();
         done();
     });
+
+    it('removes empty groups', function (done) {
+        var matchHeight = $.fn.matchHeight,
+            numGroupsBeforeRemove = $.fn.matchHeight._groups.length;
+
+        $('.remove-empty-groups .item').matchHeight({ remove: true });
+
+        expect($.fn.matchHeight._groups.length + 1).toEqual(numGroupsBeforeRemove);
+
+        for (var i = 0; i < matchHeight._groups.length; i += 1) {
+            var numElements = matchHeight._groups[i].elements.length;
+            expect(numElements).toBeGreaterThan(0);
+        }
+        done();
+    });
 });
 
 
