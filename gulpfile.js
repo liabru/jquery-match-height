@@ -21,6 +21,7 @@ var staticTransform = require('connect-static-transform');
 var pkg = require('./package.json');
 var extend = require('util')._extend;
 var fs = require('fs');
+var buildDirectory = 'dist';
 var server;
 
 gulp.task('release', function(callback) {
@@ -33,7 +34,11 @@ gulp.task('release:push', function(callback) {
 });
 
 gulp.task('release:push:github', function(callback) {
-    return gulp.src(['CHANGELOG.md', 'jquery.matchHeight-min.js', 'jquery.matchHeight.js'])
+    return gulp.src([
+            'CHANGELOG.md', 
+            buildDirectory + '/jquery.matchHeight-min.js', 
+            buildDirectory + '/jquery.matchHeight.js'
+        ])
         .pipe(release({
           tag: pkg.version,
           name: 'jquery.matchHeight.js ' + pkg.version
@@ -51,12 +56,18 @@ gulp.task('release:push:npm', function(callback) {
 gulp.task('build', function() {
     var build = extend(pkg);
     build.version = process.argv[4] || pkg.version;
-    return gulp.src(pkg.main)
+
+    gulp.src('jquery.matchHeight.js')
+        .pipe(replace("jquery-match-height master", "jquery-match-height " + build.version))
+        .pipe(replace("version = 'master'", "version = '" + build.version + "'"))
+        .pipe(gulp.dest(buildDirectory));
+
+    return gulp.src('jquery.matchHeight.js')
         .pipe(replace("version = 'master'", "version = '" + build.version + "'"))
         .pipe(uglify({ output: { max_line_len: 500 } }))
         .pipe(header(banner, { build: build }))
         .pipe(rename({ suffix: '-min' }))
-        .pipe(gulp.dest('.'));
+        .pipe(gulp.dest(buildDirectory));
 });
 
 gulp.task('lint', function() {

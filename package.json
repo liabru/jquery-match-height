@@ -5,7 +5,7 @@
   "homepage": "http://brm.io/jquery-match-height/",
   "author": "Liam Brummitt <liam@brm.io> (http://brm.io/)",
   "description": "a responsive equal heights plugin for jQuery",
-  "main": "jquery.matchHeight.js",
+  "main": "dist/jquery.matchHeight.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/liabru/jquery-match-height.git"
