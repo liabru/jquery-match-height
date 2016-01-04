@@ -1,3 +1,76 @@
+<a name="0.7.0"></a>
+# 0.7.0 (2016-01-04)
+
+### release summary
+
+* added build tasks
+* added selenium unit tests
+* added lint tests
+* added `matchHeight.version` property
+* added to npm
+
+* fixed unitless properties
+* fixed inline styles being removed
+* fixed `display: flex` issue
+* fixed `display: inline-flex` issue
+* fixed row detection when items contain floating elements
+* fixed compatibility for module loaders
+
+### commit log
+
+* add custom version argument to gulp build ([ad8aac5](https://github.com/liabru/jquery-match-height/commit/ad8aac5))
+* add delay to jasmine boot ([30824fb](https://github.com/liabru/jquery-match-height/commit/30824fb))
+* add lint to all test tasks ([6b16f67](https://github.com/liabru/jquery-match-height/commit/6b16f67))
+* add test for _parse on string values with units ([4a64208](https://github.com/liabru/jquery-match-height/commit/4a64208))
+* add to npm ([0055660](https://github.com/liabru/jquery-match-height/commit/0055660))
+* added a section on tests to readme ([e0be682](https://github.com/liabru/jquery-match-height/commit/e0be682))
+* added changelog task ([5263ab1](https://github.com/liabru/jquery-match-height/commit/5263ab1))
+* added cloud selenium, local emulated ie testing, lint task, build task, release task, improved tests ([06bd876](https://github.com/liabru/jquery-match-height/commit/06bd876))
+* added gulpfile, jasmine test specs, browser test runner, selenium test runner ([ca926de](https://github.com/liabru/jquery-match-height/commit/ca926de))
+* added libscore ([03a4317](https://github.com/liabru/jquery-match-height/commit/03a4317))
+* added matchHeight.version property ([431e4d0](https://github.com/liabru/jquery-match-height/commit/431e4d0))
+* added release tasks ([49cc72f](https://github.com/liabru/jquery-match-height/commit/49cc72f))
+* added test for property option ([7bdada7](https://github.com/liabru/jquery-match-height/commit/7bdada7))
+* added test for remove ([445799d](https://github.com/liabru/jquery-match-height/commit/445799d))
+* added tests for custom toBeWithinTolerance matcher ([a89b1c2](https://github.com/liabru/jquery-match-height/commit/a89b1c2))
+* bump jquery package version ([cc9c416](https://github.com/liabru/jquery-match-height/commit/cc9c416))
+* change tests to use jquery type checking functions ([6cf52f0](https://github.com/liabru/jquery-match-height/commit/6cf52f0))
+* faster selenium testing ([a6b2da3](https://github.com/liabru/jquery-match-height/commit/a6b2da3))
+* fix bower instructions in readme ([91e50ad](https://github.com/liabru/jquery-match-height/commit/91e50ad))
+* fix for display: inline-flex, closes #68 ([e769b9f](https://github.com/liabru/jquery-match-height/commit/e769b9f)), closes [#68](https://github.com/liabru/jquery-match-height/issues/68)
+* fix for unitless properties by forcing px, closes #64 ([d8cc365](https://github.com/liabru/jquery-match-height/commit/d8cc365)), closes [#64](https://github.com/liabru/jquery-match-height/issues/64)
+* fix issue maintaining inline styles, closes #95 ([878ff96](https://github.com/liabru/jquery-match-height/commit/878ff96)), closes [#95](https://github.com/liabru/jquery-match-height/issues/95)
+* fix issue with 'display:flex', closes #77 ([dc53a49](https://github.com/liabru/jquery-match-height/commit/dc53a49)), closes [#77](https://github.com/liabru/jquery-match-height/issues/77)
+* fix issues with build script ([1195421](https://github.com/liabru/jquery-match-height/commit/1195421))
+* fix linter issues ([0165e74](https://github.com/liabru/jquery-match-height/commit/0165e74))
+* Fix package manager registries URLs ([036df1b](https://github.com/liabru/jquery-match-height/commit/036df1b))
+* fixed local test config for non-windows ([d67ca25](https://github.com/liabru/jquery-match-height/commit/d67ca25))
+* fixed missing dependencies ([c608b80](https://github.com/liabru/jquery-match-height/commit/c608b80))
+* handle error when test server is already running ([9e6487d](https://github.com/liabru/jquery-match-height/commit/9e6487d))
+* ignore linebreak style on lint ([1510b58](https://github.com/liabru/jquery-match-height/commit/1510b58))
+* Improve row detection when cells contain floating contents ([8844acb](https://github.com/liabru/jquery-match-height/commit/8844acb))
+* improved readme ([1cf2c27](https://github.com/liabru/jquery-match-height/commit/1cf2c27))
+* improved tasks ([61a9ed4](https://github.com/liabru/jquery-match-height/commit/61a9ed4))
+* improved tests ([b1cadb5](https://github.com/liabru/jquery-match-height/commit/b1cadb5))
+* Make plugin compatible with module loaders ([b5988c1](https://github.com/liabru/jquery-match-height/commit/b5988c1))
+* Merge branch 'feature/tests' into develop ([a7d35dc](https://github.com/liabru/jquery-match-height/commit/a7d35dc))
+* Merge branch 'floatingcontents' of https://github.com/jorrit/jquery-match-height into jorrit-floatin ([89b74a7](https://github.com/liabru/jquery-match-height/commit/89b74a7))
+* Merge branch 'jorrit-floatingcontents' ([dc9716b](https://github.com/liabru/jquery-match-height/commit/dc9716b))
+* Merge pull request #81 from afelicioni/patch-1 ([c5566da](https://github.com/liabru/jquery-match-height/commit/c5566da))
+* Merge pull request #82 from JulienMelissas/patch-1 ([63d8ca4](https://github.com/liabru/jquery-match-height/commit/63d8ca4))
+* remove ie testing meta tags ([44ed2fe](https://github.com/liabru/jquery-match-height/commit/44ed2fe))
+* replace browserstack tunnel with ngrok ([2c67ca0](https://github.com/liabru/jquery-match-height/commit/2c67ca0))
+* run webdriver spec for all breakpoints ([3440598](https://github.com/liabru/jquery-match-height/commit/3440598))
+* update master build ([df2e0c2](https://github.com/liabru/jquery-match-height/commit/df2e0c2))
+* update master build ([f4b4b98](https://github.com/liabru/jquery-match-height/commit/f4b4b98))
+* updated min file ([99648ca](https://github.com/liabru/jquery-match-height/commit/99648ca))
+* use a spy for callback tests ([a72a2cf](https://github.com/liabru/jquery-match-height/commit/a72a2cf))
+* use gutil.log ([00a91bc](https://github.com/liabru/jquery-match-height/commit/00a91bc))
+* use local test images ([02398d9](https://github.com/liabru/jquery-match-height/commit/02398d9))
+* Use unminified version in Bower's "main" argument ([eedca73](https://github.com/liabru/jquery-match-height/commit/eedca73))
+
+
+
 <a name="0.6.0"></a>
 # 0.6.0 (2015-03-31)
 
@@ -67,7 +140,7 @@
 
 
 <a name="0.5.2"></a>
-## 0.5.2 (2014-06-10)
+# 0.5.2 (2014-06-10)
 
 ### release summary
 
@@ -89,7 +162,7 @@
 
 
 <a name="0.5.1"></a>
-## 0.5.1 (2014-04-15)
+# 0.5.1 (2014-04-15)
 
 ### release summary
 
