@@ -244,7 +244,7 @@ var serve = function(isTest) {
 };
 
 var banner = [
-  '/*',
+  '/*!',
   '* <%= build.name %> <%= build.version %> by @liabru',
   '* <%= build.homepage %>',
   '* License <%= build.license %>',
