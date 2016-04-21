@@ -53,7 +53,7 @@ See how others are using jquery.matchHeight.js
 ### Install
 
 [jQuery](http://jquery.com/download/) is required, so include it first.
-  Download [jquery.matchHeight.js](https://github.com/liabru/jquery-match-height/blob/master/jquery.matchHeight.js) and include the script in your HTML file:
+  Download [jquery.matchHeight.js](https://raw.githubusercontent.com/liabru/jquery-match-height/master/jquery.matchHeight.js) and include the script in your HTML file:
 
 	<script src="jquery.matchHeight.js" type="text/javascript"></script>
 
