@@ -46,5 +46,8 @@
     "run-sequence": "^1.1.4",
     "selenium-standalone": "^4.7.0",
     "webdriverio": "^3.2.5"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
