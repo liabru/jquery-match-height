@@ -235,6 +235,10 @@
                         style = $that.attr('style'),
                         display = $that.css('display');
 
+                    if( $that.hasClass('mh-ignore-height') ) {
+                      return;
+                    }
+
                     // temporarily force a usable display value
                     if (display !== 'inline-block' && display !== 'flex' && display !== 'inline-flex') {
                         display = 'block';
