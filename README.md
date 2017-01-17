@@ -242,6 +242,6 @@ This license is also supplied with the release and source code.
 
 ##### Why not use CSS?
 
-Making robust, responsive equal height columns for _arbitrary content_ is [difficult or impossible](http://filamentgroup.com/lab/setting_equal_heights_with_jquery) to do with CSS alone (at least without hacks or trickery, in a backwards compatible way).
+Making robust, responsive equal height columns for _arbitrary content_ is [difficult or impossible](https://www.filamentgroup.com/lab/setting-equal-heights-with-jquery.html) to do with CSS alone (at least without hacks or trickery, in a backwards compatible way).
 
 Note you should probably ensure your layout is still usable if JavaScript is disabled.
