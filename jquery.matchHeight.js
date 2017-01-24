@@ -147,6 +147,7 @@
     matchHeight._groups = [];
     matchHeight._throttle = 80;
     matchHeight._maintainScroll = false;
+    matchHeight._freezeScroll = false;
     matchHeight._beforeUpdate = null;
     matchHeight._afterUpdate = null;
     matchHeight._rows = _rows;
@@ -291,7 +292,12 @@
 
         // restore scroll position if enabled
         if (matchHeight._maintainScroll) {
-            $(window).scrollTop((scrollTop / htmlHeight) * $('html').outerHeight(true));
+            if(matchHeight._freezeScroll) {
+                $(window).scrollTop(scrollTop);
+            }
+            else {
+                $(window).scrollTop((scrollTop / htmlHeight) * $('html').outerHeight(true));
+            }
         }
 
         return this;
