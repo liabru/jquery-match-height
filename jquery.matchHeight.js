@@ -372,13 +372,16 @@
     // apply on DOM ready event
     $(matchHeight._applyDataApi);
 
+    // use on or bind where supported
+    var on = $.fn.on ? 'on' : 'bind';
+
     // update heights on load and resize events
-    $(window).bind('load', function(event) {
+    $(window)[on]('load', function(event) {
         matchHeight._update(false, event);
     });
 
     // throttled update heights on resize events
-    $(window).bind('resize orientationchange', function(event) {
+    $(window)[on]('resize orientationchange', function(event) {
         matchHeight._update(true, event);
     });
 
