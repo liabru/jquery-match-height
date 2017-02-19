@@ -1,3 +1,15 @@
+<a name="0.7.1"></a>
+## 0.7.1 (2017-02-19)
+
+
+* change $.bind to $.on where supported, closes #120 and #145 ([e468ae9](https://github.com/liabru/jquery-match-height/commit/e468ae9)), closes [#120](https://github.com/liabru/jquery-match-height/issues/120) [#145](https://github.com/liabru/jquery-match-height/issues/145)
+* deleted redundant min file (moved to dist) ([f530833](https://github.com/liabru/jquery-match-height/commit/f530833))
+* fix release tasks ([1462c36](https://github.com/liabru/jquery-match-height/commit/1462c36))
+* Merge pull request #115 from robeerob/patch-1 ([ab31d58](https://github.com/liabru/jquery-match-height/commit/ab31d58))
+* Update README.md with raw downloadable install url ([dcc9ad6](https://github.com/liabru/jquery-match-height/commit/dcc9ad6))
+
+
+
 <a name="0.7.0"></a>
 # 0.7.0 (2016-01-04)
 
