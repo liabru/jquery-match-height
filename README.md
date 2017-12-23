@@ -9,6 +9,8 @@ It handles many edge cases that cause similar plugins to fail.
 [Advanced Usage](#advanced-usage) - [Tests](#tests) - [Known limitations](#known-limitations) - [Changelog](#changelog) - [License](#license)
 
 [![](http://api.libscore.com/badge/$.fn.matchHeight.svg)](http://libscore.com#$.fn.matchHeight)
+[![CDNJS](https://img.shields.io/cdnjs/v/jquery.matchHeight.svg?style=flat-square)](https://cdnjs.com/libraries/jquery.matchHeight)
+[![npm](https://img.shields.io/npm/v/jquery-match-height.svg?style=flat-square)](https://www.npmjs.com/package/jquery-match-height)
 
 ### Demo
 
