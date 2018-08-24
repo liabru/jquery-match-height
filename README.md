@@ -1,7 +1,6 @@
 # jquery.matchHeight.js #
 
-> *matchHeight* makes the height of all selected elements exactly equal.  
-It handles many edge cases that cause similar plugins to fail.
+> *matchHeight* makes the height of all selected elements exactly equal
 
 [brm.io/jquery-match-height](http://brm.io/jquery-match-height/)
 
@@ -15,6 +14,10 @@ It handles many edge cases that cause similar plugins to fail.
 See the [jquery.matchHeight.js demo](http://brm.io/jquery-match-height-demo).
 
 [![jquery.matchHeight.js screenshot](http://brm.io/img/content/jquery-match-height/jquery-match-height.png)](http://brm.io/jquery-match-height-demo)
+
+### Modern browsers
+
+In the years since this library was originally developed there have been updates to CSS that can now achieve equal heights in many situations. If you only need to support modern browsers then consider using [CSS Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/) and [CSS Grid](https://css-tricks.com/snippets/css/complete-guide-grid/) instead.
 
 ### Features
 
@@ -239,9 +242,3 @@ jquery.matchHeight.js is licensed under [The MIT License (MIT)](http://opensourc
 
 This license is also supplied with the release and source code.
 <br/>As stated in the license, absolutely no warranty is provided.
-
-##### Why not use CSS?
-
-Making robust, responsive equal height columns for _arbitrary content_ is [difficult or impossible](http://filamentgroup.com/lab/setting_equal_heights_with_jquery/) to do with CSS alone (at least without hacks or trickery, in a backwards compatible way).
-
-Note you should probably ensure your layout is still usable if JavaScript is disabled.
