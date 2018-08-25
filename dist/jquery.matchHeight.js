@@ -82,7 +82,8 @@
             byRow: true,
             property: 'height',
             target: null,
-            remove: false
+            remove: false,
+            minHeight: 0
         };
 
         if (typeof options === 'object') {
@@ -276,6 +277,12 @@
                 if ($that.css('box-sizing') !== 'border-box') {
                     verticalPadding += _parse($that.css('border-top-width')) + _parse($that.css('border-bottom-width'));
                     verticalPadding += _parse($that.css('padding-top')) + _parse($that.css('padding-bottom'));
+                }
+
+                // set height to minimum height, if less than element
+                if ( targetHeight < opts.minHeight )
+                {
+                    targetHeight = opts.minHeight;
                 }
 
                 // set the height (accounting for padding and border)
