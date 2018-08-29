@@ -247,7 +247,7 @@
 
                     // find the max height (including padding, but not margin)
                     if ($that.outerHeight(false) > targetHeight) {
-                        targetHeight = $that.outerHeight(false);
+                        targetHeight = $that.getBoundingClientRect().height;
                     }
 
                     // revert styles
@@ -259,7 +259,7 @@
                 });
             } else {
                 // if target set, use the height of the target element
-                targetHeight = opts.target.outerHeight(false);
+                targetHeight = opts.target[0].getBoundingClientRect().height;
             }
 
             // iterate the row and apply the height to all elements
