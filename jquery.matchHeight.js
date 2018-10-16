@@ -99,6 +99,19 @@
     };
 
     /*
+    *  _filter
+    *  Filters out elements from array for which function fn
+    *  returns false
+    */
+
+    var _filter = function(array, fn) {
+        var remaining = $.grep(array, fn);
+
+        array.length = 0;
+        $.merge(array, remaining);
+    };
+
+    /*
     *  matchHeight
     *  plugin definition
     */
@@ -118,7 +131,10 @@
                 group.elements = group.elements.not(that);
             });
 
-            // TODO: cleanup empty groups
+            //cleanup empty groups
+            _filter(matchHeight._groups, function(group) {
+                return group.elements.length;
+            });
 
             return this;
         }
