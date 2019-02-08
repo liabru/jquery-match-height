@@ -52,6 +52,11 @@
                 top = $that.offset().top - _parse($that.css('margin-top')),
                 lastRow = rows.length > 0 ? rows[rows.length - 1] : null;
 
+            // only take visible items into account
+            if (!$that.is(':visible')) {
+                return true;
+            }
+
             if (lastRow === null) {
                 // first item on the row, so just push it
                 rows.push($that);
